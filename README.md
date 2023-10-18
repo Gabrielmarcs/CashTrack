@@ -12,7 +12,7 @@ A equipe responsável pelo desenvolvimento do CashTrack é composta por:
 
 - [**Gabriel Marcos Lopes**](https://github.com/Gabrielmarcs)
 - [**Lislaila**](https://github.com/Lislaila-Pereira)
-- **Leonardo**
+- [**Leonardo Guimarães Oliveira**](https://github.com/leoguimaraes49)
 
 
 ## TECNOLOGIAS UTILIZADAS
