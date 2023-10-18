@@ -11,11 +11,11 @@ O CashTrack é uma ferramenta projetada para simplificar o controle financeiro p
 A equipe responsável pelo desenvolvimento do CashTrack é composta por:
 
 - [**Gabriel Marcos Lopes**](https://github.com/Gabrielmarcs)
-- [**Lislaila**](https://github.com/Lislaila-Pereira)
+- [**Lislaila Tarsila Pereira**](https://github.com/Lislaila-Pereira)
 - [**Leonardo Guimarães Oliveira**](https://github.com/leoguimaraes49)
 
 
-## TECNOLOGIAS UTILIZADAS
+## Tecnologias Utilizadas
 
 Neste projeto, utilizamos diversas tecnologias para o desenvolvimento. Abaixo estão algumas das principais tecnologias e suas versões:
 - **Back-end**: [Spring Boot] [JDK](versão 17)
