@@ -1,10 +1,10 @@
-# CashTrack
+# CashTrack Aplicação de Controle Financeiro
 Projeto final da disciplina Engenharia de Software - Universidade Federal de Lavras
-O CashTrack é um projeto de controle de finanças pessoais
+O CashTrack é uma aplicação criada para auxiliar no gerenciamento de finanças pessoais. Ele oferece uma maneira fácil e eficiente de controlar suas finanças de forma inteligente.
 
 ## Sobre o Projeto
 
-O CashTrack é uma aplicação para auxiliar no gerenciamento de finanças pessoais. Ele oferece uma maneira fácil e eficiente de controlar suas finanças de forma inteligente.
+O CashTrack é uma ferramenta projetada para simplificar o controle financeiro pessoal, ajudando você a acompanhar seus gastos, faturas e ganhos. Com recursos de registro de despesas e receitas, categorização com tags e uma interface amigável, ele é a escolha perfeita para indivíduos que desejam ter um melhor controle sobre suas finanças.
 
 ## Integrantes da Equipe
 
@@ -18,3 +18,5 @@ A equipe responsável pelo desenvolvimento do CashTrack é composta por:
 ## TECNOLOGIAS UTILIZADAS
 
 Neste projeto, utilizamos diversas tecnologias para o desenvolvimento. Abaixo estão algumas das principais tecnologias e suas versões:
+
+## Estrutura de Diretório
