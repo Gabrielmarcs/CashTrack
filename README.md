@@ -18,5 +18,8 @@ A equipe responsável pelo desenvolvimento do CashTrack é composta por:
 ## TECNOLOGIAS UTILIZADAS
 
 Neste projeto, utilizamos diversas tecnologias para o desenvolvimento. Abaixo estão algumas das principais tecnologias e suas versões:
+- **Back-end**: [Spring Boot] [JDK](versão 17)
+- **Front-end**: [ReactJS][NodeJS](versão 18.18.2)
+- **Banco de dados**: [MySQL](versão 8.0.34)
 
 ## Estrutura de Diretório
