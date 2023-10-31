@@ -31,9 +31,9 @@ A seguir está a estrutura de diretórios do projeto:
     - ├── readme.md
 
 
-- `Padrões Adotados/`: Esta pasta contém os padrões de codificação, estilos ou diretrizes que são seguidos no projeto.
+- `Padrões Adotados/`: Esta pasta contém os padrões que serão seguidos no projeto.
 
-- `Requisitos/`: Aqui, os documentos e artefatos relacionados aos requisitos do projeto são armazenados.
+- `Requisitos/`: Aqui, os documentos relacionados aos requisitos do projeto são armazenados.
 
 - `Frontend/`: Este diretório é dedicado ao código-fonte do frontend do sistema.
 
