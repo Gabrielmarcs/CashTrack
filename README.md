@@ -25,12 +25,10 @@ Neste projeto, utilizamos diversas tecnologias para o desenvolvimento. Abaixo es
 ## Estrutura de Diretório
 
 A seguir está a estrutura de diretórios do projeto:
-/raiz
-    ├── Padrões Adotados/
-    ├── Requisitos/
-    ├── Frontend/
-    ├── Backend/
-    ├── readme.md
+- /raiz
+    - ├── Padrões Adotados/
+    - ├── Requisitos/
+    - ├── readme.md
 
 
 - `Padrões Adotados/`: Esta pasta contém os padrões de codificação, estilos ou diretrizes que são seguidos no projeto.
