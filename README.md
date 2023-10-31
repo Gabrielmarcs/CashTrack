@@ -23,3 +23,21 @@ Neste projeto, utilizamos diversas tecnologias para o desenvolvimento. Abaixo es
 - **Banco de dados**: [MySQL](versão 8.0.34)
 
 ## Estrutura de Diretório
+
+A seguir está a estrutura de diretórios do projeto:
+/raiz
+    ├── Padrões Adotados/
+    ├── Requisitos/
+    ├── Frontend/
+    ├── Backend/
+    ├── readme.md
+
+
+- `Padrões Adotados/`: Esta pasta contém os padrões de codificação, estilos ou diretrizes que são seguidos no projeto.
+
+- `Requisitos/`: Aqui, os documentos e artefatos relacionados aos requisitos do projeto são armazenados.
+
+- `Frontend/`: Este diretório é dedicado ao código-fonte do frontend do sistema.
+
+- `Backend/`: Aqui, você encontrará o código-fonte do backend do sistema.
+
