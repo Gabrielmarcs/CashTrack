@@ -35,4 +35,16 @@ public class ReceitaController {
     public List<ReceitaModelo> getAllReceitas() {
         return receitaService.getAllReceitas();
     }
+
+    // Atualizar uma receita
+    @PutMapping("/{id}")
+    public ResponseEntity<ReceitaModelo> updateReceita(@PathVariable Long id, @RequestBody ReceitaModelo receita) {
+    if (receitaRepository.existsById(id)) {
+        receita.setId(id);
+        ReceitaModelo updatedReceita = receitaService.updateReceita(receita);
+            return ResponseEntity.ok(updatedReceita);
+    } else {
+            return ResponseEntity.notFound().build();
+    }
+}
 }

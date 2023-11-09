@@ -28,4 +28,9 @@ public class ReceitaService {
     public List<ReceitaModelo> getAllReceitas() {
         return receitaRepository.findAll();
     }
+
+    // atualizar uma receita
+    public ReceitaModelo updateReceita(ReceitaModelo receita) {
+        return receitaRepository.save(receita);
+    }
 }
