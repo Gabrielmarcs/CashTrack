@@ -1,9 +1,10 @@
 
-package com.api.backend.controlador;
+package com.api.backend.controle;
 
-import com.api.backend.modelo.Receita;
+import com.api.backend.modelo.ReceitaModelo;
+import com.api.backend.repositorio.ReceitaRepository;
 import com.api.backend.servico.ReceitaService;
-import com.api.backend.modelo.ReceitaRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,13 @@ public class ReceitaController {
 
     // adicionar uma nova receita
     @PostMapping
-    public Receita addReceita(@RequestBody Receita receita) {
+    public ReceitaModelo addReceita(@RequestBody ReceitaModelo receita) {
         return receitaService.addReceita(receita);
     }
 
+    // listar todas as receitas
+    @GetMapping
+    public List<ReceitaModelo> getAllReceitas() {
+        return receitaService.getAllReceitas();
+    }
 }

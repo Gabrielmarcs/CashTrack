@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "receitas")
-public class Receita {
+public class ReceitaModelo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,10 +15,10 @@ public class Receita {
     private double valor;
 
     // Construtores
-    public Receita() {
+    public ReceitaModelo() {
     }
 
-    public Receita(String descricao, double valor) {
+    public ReceitaModelo(String descricao, double valor) {
         this.descricao = descricao;
         this.valor = valor;
     }

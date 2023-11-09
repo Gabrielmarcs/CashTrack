@@ -1,8 +1,9 @@
 
 package com.api.backend.servico;
 
-import com.api.backend.modelo.Receita;
-import com.api.backend.modelo.ReceitaRepository;
+import com.api.backend.modelo.ReceitaModelo;
+import com.api.backend.repositorio.ReceitaRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,12 @@ public class ReceitaService {
     }
 
     // adicionar uma receita
-    public Receita addReceita(Receita receita) {
+    public ReceitaModelo addReceita(ReceitaModelo receita) {
         return receitaRepository.save(receita);
     }
 
+    // listar todas as receitas
+    public List<ReceitaModelo> getAllReceitas() {
+        return receitaRepository.findAll();
+    }
 }
