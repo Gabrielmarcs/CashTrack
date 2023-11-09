@@ -1,5 +1,6 @@
 package com.api.backend.modelo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,9 +20,8 @@ public class UsuarioModelo {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String nome;
     private String email;
-
-
+    private String senha;
 }
