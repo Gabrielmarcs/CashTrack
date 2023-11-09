@@ -24,13 +24,13 @@ public class ReceitaController {
         this.receitaRepository = receitaRepository;
     }
 
-    // adicionar uma nova receita
+    // Adicionar uma nova receita
     @PostMapping
     public ReceitaModelo addReceita(@RequestBody ReceitaModelo receita) {
         return receitaService.addReceita(receita);
     }
 
-    // listar todas as receitas
+    // Listar todas as receitas
     @GetMapping
     public List<ReceitaModelo> getAllReceitas() {
         return receitaService.getAllReceitas();
@@ -39,12 +39,24 @@ public class ReceitaController {
     // Atualizar uma receita
     @PutMapping("/{id}")
     public ResponseEntity<ReceitaModelo> updateReceita(@PathVariable Long id, @RequestBody ReceitaModelo receita) {
-    if (receitaRepository.existsById(id)) {
-        receita.setId(id);
-        ReceitaModelo updatedReceita = receitaService.updateReceita(receita);
+        if (receitaRepository.existsById(id)) {
+            receita.setId(id);
+            ReceitaModelo updatedReceita = receitaService.updateReceita(receita);
             return ResponseEntity.ok(updatedReceita);
-    } else {
+        } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Deletar uma receita
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReceita(@PathVariable Long id) {
+        if (receitaRepository.existsById(id)) {
+            receitaService.deleteReceita(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
-}
+

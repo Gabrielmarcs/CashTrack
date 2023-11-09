@@ -33,4 +33,9 @@ public class ReceitaService {
     public ReceitaModelo updateReceita(ReceitaModelo receita) {
         return receitaRepository.save(receita);
     }
+
+    // deletar uma receita
+    public void deleteReceita(Long id) {
+        receitaRepository.deleteById(id);
+    }
 }
