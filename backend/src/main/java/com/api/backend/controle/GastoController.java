@@ -25,4 +25,8 @@ public class GastoController {
         return ResponseEntity.ok(gastoService.adicionarGasto(gasto));
     }
 
+    @GetMapping
+    public ResponseEntity<List<GastoModelo>> listarTodosGastos() {
+        return ResponseEntity.ok(gastoService.listarTodosGastos());
+    }
 }

@@ -22,4 +22,7 @@ public class GastoService {
         return gastoRepository.save(gasto);
     }
 
+    public List<GastoModelo> listarTodosGastos() {
+        return gastoRepository.findAll();
+    }
 }
