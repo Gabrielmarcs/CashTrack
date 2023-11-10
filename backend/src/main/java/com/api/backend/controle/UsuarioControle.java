@@ -14,7 +14,7 @@ import com.api.backend.repositorio.UsuarioRepositorio;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/usuarios")
+@RequestMapping("/usuarios")
 
 public class UsuarioControle {
     @Autowired

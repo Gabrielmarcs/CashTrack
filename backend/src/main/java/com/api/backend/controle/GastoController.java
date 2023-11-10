@@ -46,6 +46,6 @@ public class GastoController {
     Optional<GastoModelo> gasto = gastoService.detalharGasto(id);
         return gasto.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
-}
+    }
 
 }
