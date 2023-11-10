@@ -33,4 +33,9 @@ public class GastoService {
     public void excluirGasto(Long id) {
         gastoRepository.deleteById(id);
     }
+
+    public Optional<GastoModelo> detalharGasto(Long id) {
+        return gastoRepository.findById(id);
+    }
+    
 }

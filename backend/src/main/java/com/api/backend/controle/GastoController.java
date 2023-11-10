@@ -40,4 +40,12 @@ public class GastoController {
         gastoService.excluirGasto(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GastoModelo> detalharGasto(@PathVariable Long id) {
+    Optional<GastoModelo> gasto = gastoService.detalharGasto(id);
+        return gasto.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+}
+
 }
