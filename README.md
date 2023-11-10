@@ -28,7 +28,8 @@ A seguir está a estrutura de diretórios do projeto:
 - /raiz
     - ├── Padrões Adotados/
     - ├── Requisitos/
-    - ├── Backend/
+    - ├── backend/
+    - ├── frontend/
     - ├── readme.md
 
 
@@ -36,7 +37,7 @@ A seguir está a estrutura de diretórios do projeto:
 
 - `Requisitos/`: Aqui, os documentos relacionados aos requisitos do projeto são armazenados.
 
-- `Frontend/`: Este diretório é dedicado ao código-fonte do frontend do sistema.
+- `frontend/`: Este diretório é dedicado ao código-fonte do frontend do sistema.
 
-- `Backend/`: Aqui, você encontrará o código-fonte do backend do sistema.
+- `backend/`: Aqui, você encontrará o código-fonte do backend do sistema.
 
