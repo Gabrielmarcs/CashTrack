@@ -25,4 +25,9 @@ public class GastoService {
     public List<GastoModelo> listarTodosGastos() {
         return gastoRepository.findAll();
     }
+
+    public GastoModelo editarGasto(Long id, GastoModelo gastoAtualizado) {
+        return gastoRepository.save(gastoAtualizado);
+    }
+
 }

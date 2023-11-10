@@ -29,4 +29,9 @@ public class GastoController {
     public ResponseEntity<List<GastoModelo>> listarTodosGastos() {
         return ResponseEntity.ok(gastoService.listarTodosGastos());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GastoModelo> editarGasto(@PathVariable Long id, @RequestBody GastoModelo gastoAtualizado) {
+        return ResponseEntity.ok(gastoService.editarGasto(id, gastoAtualizado));
+    }
 }
