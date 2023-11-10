@@ -1,9 +1,12 @@
 package com.api.backend.modelo;
 
-import javax.persistence.Column;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -24,4 +27,7 @@ public class UsuarioModelo {
     private String nome;
     private String email;
     private String senha;
+    //usuario tem varias receitas
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<ReceitaModelo> receitas;
 }
