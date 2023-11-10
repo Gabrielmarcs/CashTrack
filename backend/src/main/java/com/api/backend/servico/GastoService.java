@@ -30,4 +30,7 @@ public class GastoService {
         return gastoRepository.save(gastoAtualizado);
     }
 
+    public void excluirGasto(Long id) {
+        gastoRepository.deleteById(id);
+    }
 }

@@ -34,4 +34,10 @@ public class GastoController {
     public ResponseEntity<GastoModelo> editarGasto(@PathVariable Long id, @RequestBody GastoModelo gastoAtualizado) {
         return ResponseEntity.ok(gastoService.editarGasto(id, gastoAtualizado));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> excluirGasto(@PathVariable Long id) {
+        gastoService.excluirGasto(id);
+        return ResponseEntity.ok().build();
+    }
 }
