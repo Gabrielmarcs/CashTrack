@@ -1,4 +1,3 @@
-
 package com.api.backend.modelo;
 
 import javax.persistence.*;
@@ -6,13 +5,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = "receitas")
 public class ReceitaModelo {
-
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String descricao;
     private double valor;
+    //receita tem um usuario
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private UsuarioModelo usuario;
 
     // Construtores
     public ReceitaModelo() {
