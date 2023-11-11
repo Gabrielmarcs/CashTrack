@@ -13,7 +13,7 @@ import com.api.backend.modelo.UsuarioModelo;
 import com.api.backend.repositorio.UsuarioRepositorio;
 
 @RestController
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @RequestMapping("/api/usuarios")
 
 public class UsuarioControle {
