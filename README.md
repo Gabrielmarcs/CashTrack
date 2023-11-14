@@ -29,8 +29,13 @@ A seguir está a estrutura de diretórios do projeto:
     - ├── Padrões Adotados/
     - ├── Requisitos/
     - ├── backend/
+         - ├── controle/
+         - ├── modelo/
+         - ├── repositorio/
+         - ├── servico/
     - ├── frontend/
     - ├── readme.md
+
 
 
 - `Padrões Adotados/`: Esta pasta contém os padrões que serão seguidos no projeto.
@@ -40,4 +45,39 @@ A seguir está a estrutura de diretórios do projeto:
 - `frontend/`: Este diretório é dedicado ao código-fonte do frontend do sistema.
 
 - `backend/`: Aqui, você encontrará o código-fonte do backend do sistema.
+    - `controle/`: Responsável por lidar com as requisições HTTP, interagindo com os serviços para processar essas requisições. 
+    - `modelo/`: Representa as entidades de negócios da aplicação.
+    - `repositorio/`: Responsável por acessar o banco de dados.
+    - `servico/`: Contém a lógica de negócios da aplicação.
+
+## Regras de uso do Git
+1. **Mensagens Descritivas:**
+   - Escreva mensagens de commit claras e descritivas.
+   - Comece a mensagem com um verbo no imperativo (ex: "Adiciona", "Corrige", "Atualiza").
+
+2. **Tamanho do Commit:**
+   - Mantenha os commits pequenos e focados em uma única tarefa ou alteração.
+
+3. **Evite Commits "Quebrados"**
+   - Evite fazer commits que quebram a compilação ou a funcionalidade.
+
+## Regras Para Boas Práticas de Programação
+As práticas de boa programação a seguir devem ser utilizadas para manter a qualidade e legibilidade do código. 
+1. **Nomeação Intuitiva:**
+   - Os nomes de variáveis e funções devem ser intuitivos, refletindo claramente o propósito da variável ou função.
+
+2. **Padrão CamelCase:**
+   - Utilize o padrão CamelCase para definir o nome das variáveis. Por exemplo, `nomeDaVariavel` ou `calcularResultado`.
+
+3. **Documentação Adequada:**
+   - Cada função ou bloco de código significativo deve ser acompanhado por uma documentação que explique seu propósito e comportamento. A documentação pode ser em forma de comentários ou docstrings.
+
+4. **Princípios CLEAN CODE:**
+   - Aplique os princípios do CLEAN CODE, como evitar duplicação de código, manter funções curtas e focadas, e garantir a clareza e simplicidade do código.
+
+5. **Atualização Contínua do README:**
+   - Mantenha o arquivo README sempre atualizado com informações essenciais sobre o projeto, instruções de instalação e qualquer outra informação relevante para os desenvolvedores.
+
+6. **Consistência na Indentação Utilizando Tabs:**
+   - Mantenha a consistência na indentação do código utilizando tabs.
 

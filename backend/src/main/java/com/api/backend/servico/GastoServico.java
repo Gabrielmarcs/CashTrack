@@ -1,7 +1,7 @@
 package com.api.backend.servico;
 
 import com.api.backend.modelo.GastoModelo;
-import com.api.backend.repositorio.GastoRepository;
+import com.api.backend.repositorio.GastoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GastoService {
+public class GastoServico {
 
-    private final GastoRepository gastoRepository;
+    private final GastoRepositorio gastoRepository;
 
     @Autowired
-    public GastoService(GastoRepository gastoRepository) {
+    public GastoServico(GastoRepositorio gastoRepository) {
         this.gastoRepository = gastoRepository;
     }
 

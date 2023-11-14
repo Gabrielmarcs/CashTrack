@@ -2,8 +2,8 @@
 package com.api.backend.controle;
 
 import com.api.backend.modelo.ReceitaModelo;
-import com.api.backend.repositorio.ReceitaRepository;
-import com.api.backend.servico.ReceitaService;
+import com.api.backend.repositorio.ReceitaRepositorio;
+import com.api.backend.servico.ReceitaServico;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +13,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/receitas")
-public class ReceitaController {
+public class ReceitaControle {
 
-    private final ReceitaService receitaService;
-    private final ReceitaRepository receitaRepository;
+    private final ReceitaServico receitaService;
+    private final ReceitaRepositorio receitaRepository;
 
     @Autowired
-    public ReceitaController(ReceitaService receitaService, ReceitaRepository receitaRepository) {
+    public ReceitaControle(ReceitaServico receitaService, ReceitaRepositorio receitaRepository) {
         this.receitaService = receitaService;
         this.receitaRepository = receitaRepository;
     }

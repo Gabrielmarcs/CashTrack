@@ -1,7 +1,7 @@
 package com.api.backend.controle;
 
 import com.api.backend.modelo.GastoModelo;
-import com.api.backend.servico.GastoService;
+import com.api.backend.servico.GastoServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +11,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/gastos")
-public class GastoController {
+public class GastoControle {
 
-    private final GastoService gastoService;
+    private final GastoServico gastoService;
 
     @Autowired
-    public GastoController(GastoService gastoService) {
+    public GastoControle(GastoServico gastoService) {
         this.gastoService = gastoService;
     }
 

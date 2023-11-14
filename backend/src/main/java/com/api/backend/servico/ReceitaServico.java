@@ -2,7 +2,7 @@
 package com.api.backend.servico;
 
 import com.api.backend.modelo.ReceitaModelo;
-import com.api.backend.repositorio.ReceitaRepository;
+import com.api.backend.repositorio.ReceitaRepositorio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ReceitaService {
+public class ReceitaServico {
 
-    private final ReceitaRepository receitaRepository;
+    private final ReceitaRepositorio receitaRepository;
 
     @Autowired
-    public ReceitaService(ReceitaRepository receitaRepository) {
+    public ReceitaServico(ReceitaRepositorio receitaRepository) {
         this.receitaRepository = receitaRepository;
     }
 
