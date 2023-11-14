@@ -35,7 +35,7 @@ A seguir está a estrutura de diretórios do projeto:
          - ├── servico/
     - ├── frontend/
     - ├── readme.md
-
+    - ├── .gitignore
 
 
 - `Padrões Adotados/`: Esta pasta contém os padrões que serão seguidos no projeto.
