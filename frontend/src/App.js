@@ -1,10 +1,10 @@
 import './App.css';
-import Login from './Login';
+import TelaLogin from './TelaLogin';
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      <TelaLogin />
     </div>
   );
 }
