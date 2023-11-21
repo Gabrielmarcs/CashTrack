@@ -18,7 +18,7 @@ public class GastoServico {
         this.gastoRepository = gastoRepository;
     }
 
-    public GastoModelo adicionarGasto(GastoModelo gasto) {
+    public GastoModelo addGasto(GastoModelo gasto) {
         return gastoRepository.save(gasto);
     }
 
@@ -26,11 +26,11 @@ public class GastoServico {
         return gastoRepository.findAll();
     }
 
-    public GastoModelo editarGasto(Long id, GastoModelo gastoAtualizado) {
+    public GastoModelo updateGasto(Long id, GastoModelo gastoAtualizado) {
         return gastoRepository.save(gastoAtualizado);
     }
 
-    public void excluirGasto(Long id) {
+    public void deleteGasto(Long id) {
         gastoRepository.deleteById(id);
     }
 

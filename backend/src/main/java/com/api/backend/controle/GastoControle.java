@@ -21,8 +21,8 @@ public class GastoControle {
     }
 
     @PostMapping
-    public ResponseEntity<GastoModelo> adicionarGasto(@RequestBody GastoModelo gasto) {
-        return ResponseEntity.ok(gastoService.adicionarGasto(gasto));
+    public ResponseEntity<GastoModelo> addGasto(@RequestBody GastoModelo gasto) {
+        return ResponseEntity.ok(gastoService.addGasto(gasto));
     }
 
     @GetMapping
@@ -31,13 +31,13 @@ public class GastoControle {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GastoModelo> editarGasto(@PathVariable Long id, @RequestBody GastoModelo gastoAtualizado) {
-        return ResponseEntity.ok(gastoService.editarGasto(id, gastoAtualizado));
+    public ResponseEntity<GastoModelo> updateGasto(@PathVariable Long id, @RequestBody GastoModelo gastoAtualizado) {
+        return ResponseEntity.ok(gastoService.updateGasto(id, gastoAtualizado));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> excluirGasto(@PathVariable Long id) {
-        gastoService.excluirGasto(id);
+    public ResponseEntity<?> deleteGasto(@PathVariable Long id) {
+        gastoService.deleteGasto(id);
         return ResponseEntity.ok().build();
     }
 
