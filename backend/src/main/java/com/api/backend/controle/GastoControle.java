@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/gastos")
+@CrossOrigin(origins = "*")
 public class GastoControle {
 
     private final GastoServico gastoService;
