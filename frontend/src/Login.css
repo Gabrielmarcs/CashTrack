@@ -1,0 +1,51 @@
+/* Login.css */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap');
+.container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .leftContainer {
+    flex: 1;
+    background-color: #2B5E30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .rightContainer {
+    flex: 1;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .title {
+    text-align: center;
+    color: white;
+
+    font-size: 32px;
+    font-family: Outfit;
+    font-weight: 700;
+  }
+  
+  .inputField {
+    margin-bottom: 1em;
+    padding: 1em;
+    border-radius: 15px;
+    border: 1px solid lightgreen;
+  }
+  
+  .loginButton {
+    width: 24%;
+    padding: 1em;
+    border-radius: 15px;
+    background-color: #2B5E30;
+    color: white;
+    font-size: 15px;
+    font-family: Outfit;
+    font-weight: 700;
+  }
+  
