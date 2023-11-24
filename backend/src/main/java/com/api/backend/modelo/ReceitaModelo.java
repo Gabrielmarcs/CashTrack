@@ -3,7 +3,7 @@ package com.api.backend.modelo;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "receitas")
+@Table(name = "receita")
 public class ReceitaModelo {
  
     @Id

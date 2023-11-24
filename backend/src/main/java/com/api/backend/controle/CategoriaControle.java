@@ -1,33 +1,65 @@
 package com.api.backend.controle;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.backend.modelo.CategoriaModelo;
 import com.api.backend.repositorio.CategoriaRepositorio;
+import com.api.backend.servico.CategoriaServico;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/categorias")
+@RequestMapping("/categoria")
 public class CategoriaControle {
     
     @Autowired
     private CategoriaRepositorio categoriaRepositorio;
+    private CategoriaServico categoriaServico;
+
+    public CategoriaControle(CategoriaRepositorio categoriaRepositorio, CategoriaServico categoriaServico) {
+        this.categoriaRepositorio = categoriaRepositorio;
+        this.categoriaServico = categoriaServico;
+    }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrarCategoria(@RequestBody CategoriaModelo categoria) {
-        // Verificar se categoria já está cadastrada
-        if (categoriaRepositorio.findByNome(categoria.getNome()) != null) {
-            return new ResponseEntity<>("Categoria já está em uso", HttpStatus.BAD_REQUEST);
+    public CategoriaModelo cadastrarCategoria(@RequestBody CategoriaModelo categoria) {
+        return categoriaServico.addCategoria(categoria);
+    }
+
+    @GetMapping("/listar")
+    public Iterable<CategoriaModelo> listarCategorias() {
+        return categoriaServico.listaCategorias();
+    }
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<CategoriaModelo> atualizarCategoria(@PathVariable Long id, @RequestBody CategoriaModelo categoria) {
+        if (categoriaRepositorio.existsById(id)) {
+            categoria.setId(id);
+            CategoriaModelo updatedCategoria = categoriaServico.atualizaCategoria(categoria);
+            return ResponseEntity.ok(updatedCategoria);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        // Salvando a nova categoria no banco de dados
-        categoriaRepositorio.save(categoria);
-        return new ResponseEntity<>("Categoria cadastrada com sucesso!", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<?> deletarCategoria(@PathVariable Long id) {
+        if (categoriaRepositorio.existsById(id)) {
+            categoriaServico.deletaCategoria(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

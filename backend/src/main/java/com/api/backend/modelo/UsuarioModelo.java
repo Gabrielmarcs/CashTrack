@@ -15,7 +15,7 @@ import lombok.Setter;
 import javax.persistence.GeneratedValue;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuario")
 @Getter
 @Setter
 

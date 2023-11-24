@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/gastos")
+@RequestMapping("/gasto")
 @CrossOrigin(origins = "*")
 public class GastoControle {
 
