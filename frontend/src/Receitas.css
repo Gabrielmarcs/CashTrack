@@ -24,19 +24,24 @@
   }
   
   .dashboard-actions button:hover {
-    background-color: #e0e0e0; /* Um tom de cinza claro quando o botão é hover */
+    color: black;
+    background-color: #e0e0e0;
   }
   
-  .yellow-button {
+  .update-button {
     background-color: yellow;
   }
   
-  .blue-button {
+  .add-button {
     color: white;
     background-color: #1262F9;
   }
 
-  
+  .del-button {
+    color: white;
+    background-color: red;
+  }
+
   .dashboard-content {
     display: flex;
     justify-content: space-between;
@@ -55,7 +60,7 @@
     cursor: pointer;
   }
  
-  .white-button {
+  .menu-receita {
     color: green;
     background-color: white;
     border: 1px solid green;
@@ -64,7 +69,8 @@
     cursor: pointer;
   }
   
-  .green-button {
+  .menu-gasto, 
+  .menu-fatura {
     color: white;
     background-color: #4caf50;
     border: none;
@@ -72,7 +78,7 @@
     border-radius: 3px;
     cursor: pointer;
   }
-  .red-button {
+  .menu-sair {
     color: white;
     background-color: red;
     border: none;
@@ -80,8 +86,6 @@
     border-radius: 3px;
     cursor: pointer;
   }
-  
-
   
   .action-button {
     margin-bottom: 10px;
@@ -110,4 +114,63 @@
     background-color: #4caf50;
     color: white;
   }
+
+  /* Estilos para o modal */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fundo escuro com opacidade */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 30px; 
+    border-radius: 15px; 
+    width: 400px; 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .modal-content h2 {
+    color: green;
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+  }
+  
+  label {
+    margin-bottom: 10px; /* Espaçamento abaixo dos labels */
+  }
+  
+  input {
+    padding: 10px;
+    margin-bottom: 15px; /* Espaçamento abaixo dos inputs */
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: 2px solid transparent; 
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  
+  button.cancelar-button-model {
+    background-color: white;
+    color: red;
+    border-color: red; 
+  }
+  
+  button.add-button-model {
+    background-color: white;
+    color: green;
+    border-color: green;
+  }
+  
   
