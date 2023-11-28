@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
-import './Login.css';
+import '../Estilos/Cadastro.css';
 import axios from 'axios';
 
-const Login = () => {
+const Cadastro = () => {
+  const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [mensagem, setMensagem] = useState('');
 
-  const handleLogin = async (e) => {
+  const handleCadastro = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/usuarios/login', {
+      const response = await axios.post('http://localhost:8080/usuarios/cadastrar', {
+        nome: nome,
         email: email,
         senha: senha
       });
-      setMensagem(response.data); // Mensagem de sucesso vinda do backend após o login
-      // Faça o redirecionamento ou ações necessárias após o login bem-sucedido
+      setMensagem(response.data); // Mensagem de sucesso vinda do backend
+      // Limpar os campos após o cadastro bem-sucedido (opcional)
+      setNome('');
+      setEmail('');
+      setSenha('');
     } catch (error) {
-      setMensagem('Credenciais inválidas');
+      setMensagem('Erro ao cadastrar usuário');
     }
   };
 
@@ -29,9 +34,16 @@ const Login = () => {
           <h1 className="title">$$CashTrack$$</h1>
         </div>
       </div>
-      
+
       <div className="rightContainer">
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleCadastro}>
+          <input
+            type="text"
+            placeholder="Nome Completo"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className="inputField"
+          />
           <input
             type="email"
             placeholder="Email"
@@ -48,9 +60,9 @@ const Login = () => {
           />
           <button
             type="submit"
-            className="loginButton"
+            className="cadastroButton"
           >
-            Login
+            Cadastrar
           </button>
         </form>
         <p>{mensagem}</p>
@@ -59,4 +71,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Cadastro;

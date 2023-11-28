@@ -1,30 +1,28 @@
 import React, { useState } from 'react';
-import './Receitas.css';
+import SelectCategoria from '../Paginas/SelectCategoria';
+import '../Estilos/Gastos.css';
+import '../Estilos/Styles.css';
 
 // Componente para o modal de Cadastro
 const CadastrarModal = ({ onClose, onAdicionar }) => {
   const [nome, setNome] = useState('');
-  const [valor, setValor] = useState('');
 
   const handleAdicionar = () => {
-    onAdicionar({ nome, valor });
+    onAdicionar({ nome}); //id e contador é automatico, valor é associado com os gastos e inicia com 0 (eu acho)
     onClose();
   };
 
+  //modal - tela de cadastro
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Cadastrar Receita</h2>
+        <h2>Cadastrar Fatura</h2>
         <div className="modal-nome">
           <label>Nome: </label>
           <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
         </div>
-        <div className='modal-valor'>
-          <label>Valor: </label>
-          <input type="text" value={valor} onChange={(e) => setValor(e.target.value)} />
-        </div>
         <div className='modal-button'>
-          <button className = 'add-button-model' onClick={handleAdicionar}>Adicionar Receita</button>
+          <button className = 'add-button-model' onClick={handleAdicionar}>Adicionar Fatura</button>
           <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
         </div>
       </div>
@@ -33,14 +31,14 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 };
 
 // Componente para o Dashboard principal
-const Dashboard = () => {
+const DashboardGasto = () => {
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
 
   const handleMenuClick = (menuItem) => {
     if (menuItem === 'Receitas') {
-      window.location.reload();
+      // Implemente a navegação para a tela de Receitas
     } else if (menuItem === 'Gastos') {
-      // Implemente a navegação para a tela de Gastos
+        window.location.reload();
     } else if (menuItem === 'Faturas') {
       // Implemente a navegação para a tela de Faturas
     } else if (menuItem === 'Sair') {
@@ -52,13 +50,14 @@ const Dashboard = () => {
     if (action === 'Cadastrar') {
       // Abre o modal de cadastro
       setIsCadastrarModalOpen(true);
-    } else {
+    }
+    else {
       // Adiciona lógica para os outros botões
     }
   };
 
-  const handleAdicionarReceita = (dados) => {
-    // Adicionar lógica para add receita no banco de dados
+  const handleAdicionarGasto = (dados) => {
+    // Adicionar lógica para add fatura no banco de dados
     // Fazer integraçao
   };
 
@@ -76,8 +75,13 @@ const Dashboard = () => {
           <button className="del-button" onClick={() => handleActionButtonClick('Excluir')}>
             Excluir
           </button>
+          <button className="detail-button" onClick={() => handleActionButtonClick('Detalhes')}>
+            Detalhes
+          </button>
         </div>
       </header>
+      <SelectCategoria />
+
       <div className="dashboard-content">
         <div className="dashboard-menu">
           <div className="menu-item menu-receita" onClick={() => handleMenuClick('Receitas')}>
@@ -97,18 +101,21 @@ const Dashboard = () => {
           <thead>
             <tr>
               <th>Id</th>
-              <th>Nome</th>
+              <th>Descricao</th>
               <th>Valor</th>
+              <th>Fatura</th>
             </tr>
           </thead>
+          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
+          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
           <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
         </table>
       </div>
       {isCadastrarModalOpen && (
-        <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarReceita} />
+        <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarGasto} />
       )}
     </div>
   );
 };
 
-export default Dashboard;
+export default DashboardGasto;

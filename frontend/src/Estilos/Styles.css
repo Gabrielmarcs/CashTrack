@@ -4,12 +4,12 @@
     align-items: center;
     padding: 20px;
   }
-  
-  .dashboard-header {
+
+.dashboard-header {
     text-align: center;
     margin-bottom: 20px;
   }
-  
+
   .dashboard-title {
     color: green;
   }
@@ -21,15 +21,16 @@
     border: none;
     border-radius: 15px;
     transition: background-color 0.5s;
-  }
+  }  
   
   .dashboard-actions button:hover {
     color: black;
     background-color: #e0e0e0;
   }
-  
+
   .update-button {
-    background-color: yellow;
+    color: white;
+    background-color: green;
   }
   
   .add-button {
@@ -42,6 +43,10 @@
     background-color: red;
   }
 
+  .detail-button {
+    color: white;
+    background-color: orange;
+  }
   .dashboard-content {
     display: flex;
     justify-content: space-between;
@@ -59,25 +64,7 @@
     margin-bottom: 10px;
     cursor: pointer;
   }
- 
-  .menu-receita {
-    color: green;
-    background-color: white;
-    border: 1px solid green;
-    padding: 8px 16px;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  .menu-gasto, 
-  .menu-fatura {
-    color: white;
-    background-color: #4caf50;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 3px;
-    cursor: pointer;
-  }
+
   .menu-sair {
     color: white;
     background-color: red;
@@ -172,5 +159,3 @@
     color: green;
     border-color: green;
   }
-  
-  
