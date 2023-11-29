@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
+import axios from 'axios';
 import '../Estilos/Receitas.css';
 import '../Estilos/Styles.css';
 
@@ -8,7 +9,7 @@ import '../Estilos/Styles.css';
 const CadastrarModal = ({ onClose, onAdicionar }) => {
   const [nome, setNome] = useState('');
   const [valor, setValor] = useState('');
-
+  
   const handleAdicionar = () => {
     onAdicionar({ nome, valor }); //nome é o descricao no banco de dados
     onClose();
@@ -40,6 +41,15 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 const DashboardReceita = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
+  const [receitas, setReceitas] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:8080/receita  ').then((response) => {
+      setReceitas(response.data);
+    })
+    .catch((erro) => {
+      console.log('Erro:' + erro);
+    });
+  }, []);
 
   const handleMenuClick = (menuItem) => {
     if (menuItem === 'Receitas') {
@@ -70,6 +80,8 @@ const DashboardReceita = () => {
     // Adicionar lógica para add receita no banco de dados
     // Fazer integraçao
   };
+
+  
 
   return (
     <div className="dashboard-container">
@@ -113,9 +125,17 @@ const DashboardReceita = () => {
               <th>Valor</th>
             </tr>
           </thead>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
+          <tbody>
+            {
+              receitas.map(receita => (
+                <tr key={receita.id}>
+                  <td>{receita.id}</td>
+                  <td>{receita.nome}</td>
+                  <td>{receita.valor}</td>
+                </tr>
+              ))
+            }
+          </tbody>
         </table>
       </div>
       {isCadastrarModalOpen && (

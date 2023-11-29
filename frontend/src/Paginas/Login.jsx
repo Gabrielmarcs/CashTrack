@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../Estilos/Login.css';
 import axios from 'axios';
+import { Link,Navigate,Redirect } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [mensagem, setMensagem] = useState('');
+  const [redirect, setRedirect] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,10 +21,15 @@ const Login = () => {
       });
       //setMensagem(response.data); // Mensagem de sucesso vinda do backend após o login
       navigate('/dashboard/receitas');
+      setMensagem(response.data); // Mensagem de sucesso vinda do backend após o login
+      setRedirect(true);
     } catch (error) {
       setMensagem('Credenciais inválidas');
     }
   };
+  if (redirect) {
+    return <Navigate to="/receita" />;
+  }
 
   return (
     <div className="container">
@@ -54,6 +61,9 @@ const Login = () => {
           >
             Login
           </button>
+
+          <Link to="/cadastro" className="link">Cadastre-se</Link>
+
         </form>
         <p>{mensagem}</p>
       </div>
