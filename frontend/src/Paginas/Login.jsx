@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import '../Estilos/Login.css';
 import axios from 'axios';
 
 const Login = () => {
+  const navigate = useNavigate(); // Use useNavigate para navegação
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [mensagem, setMensagem] = useState('');
@@ -15,8 +17,8 @@ const Login = () => {
         email: email,
         senha: senha
       });
-      setMensagem(response.data); // Mensagem de sucesso vinda do backend após o login
-      // Faça o redirecionamento ou ações necessárias após o login bem-sucedido
+      //setMensagem(response.data); // Mensagem de sucesso vinda do backend após o login
+      navigate('/dashboard/receitas');
     } catch (error) {
       setMensagem('Credenciais inválidas');
     }

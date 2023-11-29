@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import SelectCategoria from '../Paginas/SelectCategoria';
 import '../Estilos/Gastos.css';
 import '../Estilos/Styles.css';
@@ -32,19 +33,20 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 
 // Componente para o Dashboard principal
 const DashboardGasto = () => {
+  const navigate = useNavigate(); // Use useNavigate para navegação
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
 
   const handleMenuClick = (menuItem) => {
     if (menuItem === 'Receitas') {
-      // Implemente a navegação para a tela de Receitas
+      navigate('/dashboard/receitas');
     } else if (menuItem === 'Gastos') {
-        window.location.reload();
+      window.location.reload();
     } else if (menuItem === 'Faturas') {
-      // Implemente a navegação para a tela de Faturas
+      navigate('/dashboard/faturas');
     } else if (menuItem === 'Categorias') {
-      // Implemente a navegação para a tela de Categorias
+      navigate('/dashboard/categorias');
     } else if (menuItem === 'Sair') {
-      // Implemente a lógica para ação de Sair
+      navigate('/login');
     }
   };
 

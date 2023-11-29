@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import '../Estilos/Receitas.css';
 import '../Estilos/Styles.css';
 
 
-// Componente para o modal de Cadastro
+// Componente para o modal de Cadastrar
 const CadastrarModal = ({ onClose, onAdicionar }) => {
   const [nome, setNome] = useState('');
   const [valor, setValor] = useState('');
@@ -37,19 +38,20 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 
 // Componente para o Dashboard principal
 const DashboardReceita = () => {
+  const navigate = useNavigate(); // Use useNavigate para navegação
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
 
   const handleMenuClick = (menuItem) => {
     if (menuItem === 'Receitas') {
       window.location.reload();
     } else if (menuItem === 'Gastos') {
-      // Implemente a navegação para a tela de Gastos
+      navigate('/dashboard/gastos');
     } else if (menuItem === 'Faturas') {
-      // Implemente a navegação para a tela de Faturas
+      navigate('/dashboard/faturas');
     } else if (menuItem === 'Categorias') {
-      // Implemente a navegação para a tela de Categorias
+      navigate('/dashboard/categorias');
     } else if (menuItem === 'Sair') {
-      // Implemente a lógica para ação de Sair
+      navigate('/login');
     }
   };
 
@@ -57,8 +59,9 @@ const DashboardReceita = () => {
     if (action === 'Cadastrar') {
       // Abre o modal de cadastro
       setIsCadastrarModalOpen(true);
-    }
-    else {
+    } else if (action === 'Alterar') {
+      // Abre o modal de alteração
+    } else {
       // Adiciona lógica para os outros botões
     }
   };
@@ -110,6 +113,8 @@ const DashboardReceita = () => {
               <th>Valor</th>
             </tr>
           </thead>
+          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
+          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
           <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
         </table>
       </div>
