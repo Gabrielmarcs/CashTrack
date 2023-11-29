@@ -8,7 +8,8 @@
   }
   
   .menu-receita, 
-  .menu-gasto {
+  .menu-gasto,
+  .menu-categoria {
     color: white;
     background-color: #4caf50;
     border: none;

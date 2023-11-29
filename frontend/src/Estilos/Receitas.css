@@ -8,7 +8,8 @@
   }
   
   .menu-gasto, 
-  .menu-fatura {
+  .menu-fatura,
+  .menu-categoria {
     color: white;
     background-color: #4caf50;
     border: none;

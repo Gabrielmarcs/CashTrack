@@ -40,6 +40,8 @@ const DashboardFatura = () => {
       // Implemente a navegação para a tela de Gastos
     } else if (menuItem === 'Faturas') {
       window.location.reload();
+    } else if (menuItem === 'Categorias') {
+      // Implemente a lógica para ação de Sair
     } else if (menuItem === 'Sair') {
       // Implemente a lógica para ação de Sair
     }
@@ -79,13 +81,16 @@ const DashboardFatura = () => {
       <div className="dashboard-content">
         <div className="dashboard-menu">
           <div className="menu-item menu-receita" onClick={() => handleMenuClick('Receitas')}>
-            Receita
+            Receitas
           </div>
           <div className="menu-item menu-gasto" onClick={() => handleMenuClick('Gastos')}>
-            Gasto
+            Gastos
           </div>
           <div className="menu-item menu-fatura" onClick={() => handleMenuClick('Faturas')}>
-            Fatura
+            Faturas
+          </div>
+          <div className="menu-item menu-categoria" onClick={() => handleMenuClick('Categorias')}>
+            Categorias
           </div>
           <div className="menu-item menu-sair" onClick={() => handleMenuClick('Sair')}>
             Sair
