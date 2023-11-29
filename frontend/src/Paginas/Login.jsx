@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import '../Estilos/Login.css';
 import axios from 'axios';
+import { Link,Navigate,Redirect } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [mensagem, setMensagem] = useState('');
+  const [redirect, setRedirect] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,11 +18,14 @@ const Login = () => {
         senha: senha
       });
       setMensagem(response.data); // Mensagem de sucesso vinda do backend após o login
-      // Faça o redirecionamento ou ações necessárias após o login bem-sucedido
+      setRedirect(true);
     } catch (error) {
       setMensagem('Credenciais inválidas');
     }
   };
+  if (redirect) {
+    return <Navigate to="/receita" />;
+  }
 
   return (
     <div className="container">
@@ -52,6 +57,9 @@ const Login = () => {
           >
             Login
           </button>
+
+          <Link to="/cadastro" className="link">Cadastre-se</Link>
+
         </form>
         <p>{mensagem}</p>
       </div>
