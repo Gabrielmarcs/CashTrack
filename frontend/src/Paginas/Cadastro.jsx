@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import '../Estilos/Cadastro.css';
 import axios from 'axios';
 
 const Cadastro = () => {
+  const navigate = useNavigate(); // Use useNavigate para navegação
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -18,7 +20,10 @@ const Cadastro = () => {
         senha: senha
       });
       setMensagem(response.data); // Mensagem de sucesso vinda do backend
-      // Limpar os campos após o cadastro bem-sucedido (opcional)
+
+      navigate('/login');
+
+      // Limpar os campos
       setNome('');
       setEmail('');
       setSenha('');
