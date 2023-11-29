@@ -20,7 +20,7 @@ public class GastoServico {
     private final FaturaRepositorio faturaRepository;
 
     @Autowired
-    public GastoServico(GastoRepositorio gastoRepository, CategoriaRepositorio categoriaRepository, FaturaRepositorio faturaRepository) {
+    public GastoServico(GastoRepositorio gastoRepository, CategoriaRepositorio categoriaRepository, FaturaRepositorio faturaRepository, CategoriaRepositorio categoriaRepository1) {
         this.gastoRepository = gastoRepository;
         this.categoriaRepository = categoriaRepository;
         this.faturaRepository = faturaRepository;
@@ -40,6 +40,7 @@ public class GastoServico {
                 GastoModelo novoGasto = gastoRepository.save(gasto); // Salva o gasto
     
                 fatura.adicionarGasto(novoGasto); // Chama o método para adicionar o gasto na fatura
+                categoria.adicionarGasto(novoGasto);
                 faturaRepository.save(fatura); // Salva a fatura atualizada
                 
                 return novoGasto; // Retorna o gasto salvo
@@ -51,8 +52,6 @@ public class GastoServico {
         }
     }
     
-    
-
     public List<GastoModelo> listarTodosGastos() {
         return gastoRepository.findAll();
     }
@@ -67,18 +66,22 @@ public class GastoServico {
         if (gastoASerRemovido.isPresent()) {
             GastoModelo gasto = gastoASerRemovido.get();
             FaturaModelo fatura = gasto.getFatura();
+            CategoriaModelo categoria = gasto.getCategoria();
     
             gastoRepository.deleteById(id); // Remove o gasto do repositório
     
-            fatura.removerGasto(gasto); // Remove o gasto da fatura
-            faturaRepository.save(fatura); // Salva a fatura atualizada
+            categoria.removerGasto(gasto);
+            fatura.removerGasto(gasto);
+    
+            // Salva as atualizações na fatura e na categoria
+            faturaRepository.save(fatura);
+            categoriaRepository.save(categoria);
         } else {
             throw new RuntimeException("Gasto não encontrado");
         }
     }
     
     
-
     public Optional<GastoModelo> detalharGasto(Long id) {
         return gastoRepository.findById(id);
     }

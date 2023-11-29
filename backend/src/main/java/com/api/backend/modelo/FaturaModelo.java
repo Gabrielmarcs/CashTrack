@@ -27,7 +27,7 @@ public class FaturaModelo {
     private String nome;
     private double valorTotal = 0;
 
-    @OneToMany(mappedBy = "fatura", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "fatura", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<GastoModelo> gastos = new ArrayList<>();
 
     private int contadorGastos = 0;
