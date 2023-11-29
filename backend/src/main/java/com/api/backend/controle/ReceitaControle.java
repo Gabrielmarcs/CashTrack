@@ -26,7 +26,7 @@ public class ReceitaControle {
     }
 
     // Adicionar uma nova receita
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ReceitaModelo addReceita(@RequestBody ReceitaModelo receita) {
         return receitaService.addReceita(receita);
     }

@@ -18,6 +18,7 @@ public class GastoModelo {
     private Long id;
     private Double valor;
     private String metodoPagamento;
+    private String descricao;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")

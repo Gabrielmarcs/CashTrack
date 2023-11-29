@@ -11,7 +11,7 @@ public class ReceitaModelo {
     private Long id;
     private String descricao;
     private double valor;
-    //receita tem um usuario
+    //receita pertence a um usuario
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private UsuarioModelo usuario;
