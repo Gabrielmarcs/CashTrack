@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../Estilos/Categorias.css';
 import '../Estilos/Styles.css';
+import axios from 'axios';
 
 // Componente para o modal de Cadastro
 const CadastrarModal = ({ onClose, onAdicionar }) => {
@@ -65,8 +66,21 @@ const DashboardCategoria = () => {
   };
 
   const handleAdicionarCategoria = (dados) => {
-    // Adicionar lógica para add categoria no banco de dados
-    // Fazer integraçao
+    axios.post('http://localhost:8080/categoria/cadastrar', dados)
+    .then((response) => {
+      console.log('Categoria adicionada:', response.data);
+      
+      axios.get('http://localhost:8080/categoria/listar')
+        .then((response) => {
+          console.log('Categorias atualizadas:', response.data);
+        })
+        .catch((error) => {
+          console.error('Erro ao obter categorias:', error);
+        });
+    })
+    .catch((error) => {
+      console.error('Erro ao adicionar categoria:', error);
+    });
   };
 
   return (
