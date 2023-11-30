@@ -11,7 +11,7 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
   const [valor, setValor] = useState('');
   
   const handleAdicionar = () => {
-    onAdicionar({ nome, valor }); //nome é o descricao no banco de dados
+    onAdicionar({ descricao: nome, valor }); 
     onClose();
   };
 
@@ -39,15 +39,16 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 
 // Componente para o Dashboard principal
 const DashboardReceita = () => {
-  const navigate = useNavigate(); // Use useNavigate para navegação
+  const navigate = useNavigate(); 
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
   const [receitas, setReceitas] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:8080/receita  ').then((response) => {
+    axios.get('http://localhost:8080/receitas') 
+    .then((response) => {
       setReceitas(response.data);
     })
     .catch((erro) => {
-      console.log('Erro:' + erro);
+      console.log('Erro ao obter as receitas: ' + erro);
     });
   }, []);
 
@@ -77,8 +78,20 @@ const DashboardReceita = () => {
   };
 
   const handleAdicionarReceita = (dados) => {
-    // Adicionar lógica para add receita no banco de dados
-    // Fazer integraçao
+    axios.post('http://localhost:8080/receitas/cadastrar', dados)
+    .then((response) => {
+      // Após adicionar a receita com sucesso, atualize a lista de receitas
+      axios.get('http://localhost:8080/receitas')
+        .then((response) => {
+          setReceitas(response.data); // Atualiza a lista de receitas com os dados atualizados
+        })
+        .catch((erro) => {
+          console.log('Erro ao obter as receitas: ' + erro);
+        });
+    })
+    .catch((erro) => {
+      console.log('Erro ao adicionar a receita: ' + erro);
+    });
   };
 
   
@@ -130,7 +143,7 @@ const DashboardReceita = () => {
               receitas.map(receita => (
                 <tr key={receita.id}>
                   <td>{receita.id}</td>
-                  <td>{receita.nome}</td>
+                  <td>{receita.descricao}</td>
                   <td>{receita.valor}</td>
                 </tr>
               ))
