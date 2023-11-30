@@ -9,7 +9,7 @@ public class ReceitaModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String descricao;
+    private String nome;
     private double valor;
     //receita pertence a um usuario
     @ManyToOne
@@ -20,8 +20,8 @@ public class ReceitaModelo {
     public ReceitaModelo() {
     }
 
-    public ReceitaModelo(String descricao, double valor) {
-        this.descricao = descricao;
+    public ReceitaModelo(String nome, double valor) {
+        this.nome = nome;
         this.valor = valor;
     }
 
@@ -34,12 +34,12 @@ public class ReceitaModelo {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public double getValor() {

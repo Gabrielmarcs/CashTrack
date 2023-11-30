@@ -11,7 +11,7 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
   const [valor, setValor] = useState('');
   
   const handleAdicionar = () => {
-    onAdicionar({ descricao: nome, valor }); 
+    onAdicionar({ nome, valor }); 
     onClose();
   };
 
@@ -143,7 +143,7 @@ const DashboardReceita = () => {
               receitas.map(receita => (
                 <tr key={receita.id}>
                   <td>{receita.id}</td>
-                  <td>{receita.descricao}</td>
+                  <td>{receita.nome}</td>
                   <td>{receita.valor}</td>
                 </tr>
               ))
