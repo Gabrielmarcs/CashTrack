@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -24,6 +25,8 @@ import com.api.backend.repositorio.ReceitaRepositorio;
 
 @DataJpaTest
 @ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+
 public class ReceitaServicoTest {
     @Mock
     private ReceitaRepositorio mockReceitaRepositorio;
@@ -40,7 +43,7 @@ public class ReceitaServicoTest {
 
         // Cria uma instância de ReceitaModelo para adicionar
         ReceitaModelo novaReceita = new ReceitaModelo();
-        novaReceita.setDescricao("Receita Teste");
+        novaReceita.setNome("Receita Teste");
 
         // Configura o comportamento esperado do mockReceitaRepositorio
         Mockito.when(mockReceitaRepositorio.save(Mockito.any(ReceitaModelo.class))).thenReturn(novaReceita);
@@ -66,7 +69,7 @@ public class ReceitaServicoTest {
         // Cria uma instância de ReceitaModelo para adicionar
         ReceitaModelo novaReceita = new ReceitaModelo();
         novaReceita.setId(1L);
-        novaReceita.setDescricao("Receita Teste");
+        novaReceita.setNome("Receita Teste");
 
         // Configura o comportamento esperado do mockReceitaRepositorio para adicionar a receita
         when(mockReceitaRepositorio.save(any(ReceitaModelo.class))).thenReturn(novaReceita);
