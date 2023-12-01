@@ -33,7 +33,10 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 // Componente para o Dashboard principal
 const DashboardGasto = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
+  const [gastos, setGastos] = useState([]);
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
+  const [selectedGastoId, setSelectedGastoId] = useState(null);
+
 
   const handleMenuClick = (menuItem) => {
     if (menuItem === 'Receitas') {
@@ -106,15 +109,33 @@ const DashboardGasto = () => {
         <table className="dashboard-table">
           <thead>
             <tr>
+              <th></th>
               <th>Id</th>
               <th>Descricao</th>
               <th>Valor</th>
               <th>Fatura</th>
             </tr>
           </thead>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
+          <tbody>
+            {
+              gastos.map(gasto => (
+                <tr key={gasto.id} onClick={() => setSelectedGastoId(gasto.id)}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={gasto.id === selectedGastoId}
+                      onChange={() => setSelectedGastoId(gasto.id)}
+                    />
+                  </td>
+                  <td>{gasto.id}</td>
+                  <td>{gasto.descricao}</td>
+                  <td>{gasto.valor}</td>
+                  <td>{gasto.fatura}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+          
         </table>
       </div>
       {isCadastrarModalOpen && (
