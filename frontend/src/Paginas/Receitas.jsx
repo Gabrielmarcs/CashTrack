@@ -1,15 +1,14 @@
+// export default DashboardReceita;
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
-import '../Estilos/Receitas.css';
 import '../Estilos/Styles.css';
-
 
 // Componente para o modal de Cadastrar
 const CadastrarModal = ({ onClose, onAdicionar }) => {
   const [nome, setNome] = useState('');
   const [valor, setValor] = useState('');
-  
+
   const handleAdicionar = () => {
     onAdicionar({ nome, valor }); 
     onClose();
@@ -29,8 +28,64 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
           <input type="text" value={valor} onChange={(e) => setValor(e.target.value)} />
         </div>
         <div className='modal-button'>
-          <button className = 'add-button-model' onClick={handleAdicionar}>Adicionar Receita</button>
+          <button className='add-button-model' onClick={handleAdicionar}>Adicionar Receita</button>
           <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Componente para o modal de Alterar
+const AlterarModal = ({ receita, onClose, onAlterar }) => {
+  const [nome, setNome] = useState(receita.nome);
+  const [valor, setValor] = useState(receita.valor);
+
+  const handleAlterar = () => {
+    onAlterar({ id: receita.id, nome, valor });
+    onClose();
+  };
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Alterar Receita</h2>
+        <div className="modal-nome">
+          <label>Nome: </label>
+          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
+        </div>
+        <div className='modal-valor'>
+          <label>Valor: </label>
+          <input type="text" value={valor} onChange={(e) => setValor(e.target.value)} />
+        </div>
+        <div className='modal-button'>
+          <button className='add-button-model' onClick={handleAlterar}>Salvar Alterações</button>
+          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Componente para o modal de Excluir
+const ExcluirModal = ({ receita, onClose, onExcluir }) => {
+  const handleConfirmarExcluir = () => {
+    onExcluir(receita);
+    onClose();
+  };
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Confirmar Exclusão</h2>
+        <p>Deseja realmente excluir a receita "{receita.nome}"?</p>
+        <div className="modal-button">
+          <button className="add-button-model" onClick={handleConfirmarExcluir}>
+            Confirmar
+          </button>
+          <button className="cancelar-button-model" onClick={onClose}>
+            Cancelar
+          </button>
         </div>
       </div>
     </div>
@@ -41,7 +96,13 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 const DashboardReceita = () => {
   const navigate = useNavigate(); 
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
+  const [isAlterarModalOpen, setIsAlterarModalOpen] = useState(false);
   const [receitas, setReceitas] = useState([]);
+  const [selectedReceitaId, setSelectedReceitaId] = useState(null);
+  const [selectedReceita, setSelectedReceita] = useState(null);
+  const [isExcluirModalOpen, setIsExcluirModalOpen] = useState(false);
+  const [receitaParaExcluir, setReceitaParaExcluir] = useState(null);
+
   useEffect(() => {
     axios.get('http://localhost:8080/receitas') 
     .then((response) => {
@@ -70,10 +131,15 @@ const DashboardReceita = () => {
     if (action === 'Cadastrar') {
       // Abre o modal de cadastro
       setIsCadastrarModalOpen(true);
-    } else if (action === 'Alterar') {
-      // Abre o modal de alteração
-    } else {
-      // Adiciona lógica para os outros botões
+    } else if (action === 'Alterar' && selectedReceitaId !== null) {
+        // Abre o modal de alteração para a receita selecionada
+        const receitaSelecionada = receitas.find(receita => receita.id === selectedReceitaId);
+        setSelectedReceita(receitaSelecionada);
+        setIsAlterarModalOpen(true);
+    } else if (action === 'Excluir' && selectedReceitaId !== null){
+        const receitaSelecionada = receitas.find(receita => receita.id === selectedReceitaId);
+        setReceitaParaExcluir(receitaSelecionada);
+        setIsExcluirModalOpen(true);
     }
   };
 
@@ -94,7 +160,38 @@ const DashboardReceita = () => {
     });
   };
 
-  
+  const handleAlterarReceita = (dados) => {
+    axios.put(`http://localhost:8080/receitas/${dados.id}`, dados)
+      .then(() => {
+        axios.get('http://localhost:8080/receitas')
+          .then((response) => {
+            setReceitas(response.data);
+          })
+          .catch((erro) => {
+            console.log('Erro ao obter as receitas: ' + erro);
+          });
+      })
+      .catch((erro) => {
+        console.log('Erro ao alterar a receita: ' + erro);
+      });
+  };
+
+  // Adicione a função para lidar com a exclusão da receita
+  const handleExcluirReceita = (receita) => {
+    axios.delete(`http://localhost:8080/receitas/${receita.id}`)
+      .then(() => {
+        axios.get('http://localhost:8080/receitas')
+          .then((response) => {
+            setReceitas(response.data);
+          })
+          .catch((erro) => {
+            console.log('Erro ao obter as receitas: ' + erro);
+          });
+      })
+      .catch((erro) => {
+        console.log('Erro ao excluir a receita: ' + erro);
+      });
+  };
 
   return (
     <div className="dashboard-container">
@@ -104,7 +201,11 @@ const DashboardReceita = () => {
           <button className="add-button" onClick={() => handleActionButtonClick('Cadastrar')}>
             Cadastrar
           </button>
-          <button className="update-button" onClick={() => handleActionButtonClick('Alterar')}>
+          <button
+            className="update-button"
+            onClick={() => handleActionButtonClick('Alterar')}
+            disabled={selectedReceitaId === null}
+          >
             Alterar
           </button>
           <button className="del-button" onClick={() => handleActionButtonClick('Excluir')}>
@@ -133,6 +234,7 @@ const DashboardReceita = () => {
         <table className="dashboard-table">
           <thead>
             <tr>
+              <th></th>
               <th>Id</th>
               <th>Nome</th>
               <th>Valor</th>
@@ -141,7 +243,14 @@ const DashboardReceita = () => {
           <tbody>
             {
               receitas.map(receita => (
-                <tr key={receita.id}>
+                <tr key={receita.id} onClick={() => setSelectedReceitaId(receita.id)}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={receita.id === selectedReceitaId}
+                      onChange={() => setSelectedReceitaId(receita.id)}
+                    />
+                  </td>
                   <td>{receita.id}</td>
                   <td>{receita.nome}</td>
                   <td>{receita.valor}</td>
@@ -154,6 +263,20 @@ const DashboardReceita = () => {
       {isCadastrarModalOpen && (
         <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarReceita} />
       )}
+      {isAlterarModalOpen && selectedReceita && (
+        <AlterarModal
+          receita={selectedReceita}
+          onClose={() => setIsAlterarModalOpen(false)}
+          onAlterar={handleAlterarReceita}
+        />
+      )}
+      {isExcluirModalOpen && receitaParaExcluir && (
+        <ExcluirModal
+          receita={receitaParaExcluir}
+          onClose={() => setIsExcluirModalOpen(false)}
+          onExcluir={handleExcluirReceita}
+        />
+    )}
     </div>
   );
 };

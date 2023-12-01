@@ -18,7 +18,6 @@
         <!-- Versões recomendadas das dependências -->
         <spring.version>5.3.14</spring.version>
         <mysql.connector.version>8.0.26</mysql.connector.version>
-        <postgresql.version>42.2.24</postgresql.version>
         <!-- Outras propriedades -->
     </properties>
     <dependencies>
@@ -57,15 +56,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin
-        <dependency>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.10</version>
-        </dependency> -->
-        
-
     </dependencies>
 
     <build>
@@ -81,39 +71,6 @@
                         </exclude>
                     </excludes>
                 </configuration>
-            </plugin>
-            <!-- Plugin JaCoCo -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version> <!-- Use a versão mais recente disponível -->
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Plugin de Relatório JaCoCo -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version> <!-- Use a versão mais recente disponível -->
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
             </plugin>
         </plugins>
     </build>

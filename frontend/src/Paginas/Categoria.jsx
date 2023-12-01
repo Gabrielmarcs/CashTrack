@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import '../Estilos/Categorias.css';
 import '../Estilos/Styles.css';
 import axios from 'axios';
 

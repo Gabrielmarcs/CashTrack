@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import '../Estilos/Faturas.css';
 import '../Estilos/Styles.css';
 
 // Componente para o modal de Cadastro

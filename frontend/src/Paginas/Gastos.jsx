@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import SelectCategoria from '../Paginas/SelectCategoria';
-import '../Estilos/Gastos.css';
 import '../Estilos/Styles.css';
 
 // Componente para o modal de Cadastro
