@@ -14,6 +14,11 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    if (!email || !senha) {
+      setMensagem('Por favor, preencha todos os campos.');
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:8080/usuarios/login', {
         email: email,

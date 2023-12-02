@@ -40,7 +40,6 @@ public class GastoServico {
                 GastoModelo novoGasto = gastoRepository.save(gasto); // Salva o gasto
     
                 fatura.adicionarGasto(novoGasto); // Chama o método para adicionar o gasto na fatura
-                categoria.adicionarGasto(novoGasto);
                 faturaRepository.save(fatura); // Salva a fatura atualizada
                 
                 return novoGasto; // Retorna o gasto salvo
@@ -70,7 +69,6 @@ public class GastoServico {
     
             gastoRepository.deleteById(id); // Remove o gasto do repositório
     
-            categoria.removerGasto(gasto);
             fatura.removerGasto(gasto);
     
             // Salva as atualizações na fatura e na categoria

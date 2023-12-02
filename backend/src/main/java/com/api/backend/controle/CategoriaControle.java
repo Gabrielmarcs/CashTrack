@@ -2,13 +2,7 @@ package com.api.backend.controle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.api.backend.modelo.CategoriaModelo;
 import com.api.backend.repositorio.CategoriaRepositorio;
@@ -16,6 +10,7 @@ import com.api.backend.servico.CategoriaServico;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -23,8 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class CategoriaControle {
     
     @Autowired
-    private CategoriaRepositorio categoriaRepositorio;
-    private CategoriaServico categoriaServico;
+    private final CategoriaRepositorio categoriaRepositorio;
+    private final CategoriaServico categoriaServico;
 
     public CategoriaControle(CategoriaRepositorio categoriaRepositorio, CategoriaServico categoriaServico) {
         this.categoriaRepositorio = categoriaRepositorio;
@@ -36,8 +31,8 @@ public class CategoriaControle {
         return categoriaServico.addCategoria(categoria);
     }
 
-    @GetMapping("/listar")
-    public Iterable<CategoriaModelo> listarCategorias() {
+    @GetMapping
+    public List<CategoriaModelo> listarCategorias() {
         return categoriaServico.listaCategorias();
     }
 

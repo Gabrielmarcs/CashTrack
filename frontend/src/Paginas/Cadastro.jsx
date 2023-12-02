@@ -13,6 +13,11 @@ const Cadastro = () => {
   const handleCadastro = async (e) => {
     e.preventDefault();
 
+    if (!nome || !email || !senha) {
+      setMensagem('Por favor, preencha todos os campos.');
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:8080/usuarios/cadastrar', {
         nome: nome,

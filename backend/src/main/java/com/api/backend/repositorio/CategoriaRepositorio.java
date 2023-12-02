@@ -7,5 +7,4 @@ import com.api.backend.modelo.CategoriaModelo;
 
 @Repository
 public interface CategoriaRepositorio extends CrudRepository<CategoriaModelo, Long>{
-    CategoriaRepositorio findByNome(String nome);
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../Estilos/Styles.css';
 import axios from 'axios';
@@ -39,6 +39,17 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 const DashboardCategoria = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
+  const [categorias, setCategoria] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/categoria') 
+    .then((response) => {
+      setCategoria(response.data);
+    })
+    .catch((erro) => {
+      console.log('Erro ao obter as categorias: ' + erro);
+    });
+  }, []);
 
   const handleMenuClick = (menuItem) => {
     if (menuItem === 'Receitas') {
@@ -56,7 +67,6 @@ const DashboardCategoria = () => {
 
   const handleActionButtonClick = (action) => {
     if (action === 'Cadastrar') {
-      // Abre o modal de cadastro
       setIsCadastrarModalOpen(true);
     }
     else {
@@ -66,20 +76,19 @@ const DashboardCategoria = () => {
 
   const handleAdicionarCategoria = (dados) => {
     axios.post('http://localhost:8080/categoria/cadastrar', dados)
-    .then((response) => {
-      console.log('Categoria adicionada:', response.data);
-      
-      axios.get('http://localhost:8080/categoria/listar')
-        .then((response) => {
-          console.log('Categorias atualizadas:', response.data);
-        })
-        .catch((error) => {
-          console.error('Erro ao obter categorias:', error);
-        });
-    })
-    .catch((error) => {
-      console.error('Erro ao adicionar categoria:', error);
-    });
+      .then((response) => {
+        // Atualiza a lista de categorias após adicionar com sucesso
+        axios.get('http://localhost:8080/categoria')
+          .then((response) => {
+            setCategoria(response.data); // Atualiza a lista de categorias
+          })
+          .catch((erro) => {
+            console.log('Erro ao obter categorias:', erro);
+          });
+      })
+      .catch((erro) => {
+        console.log('Erro ao adicionar categoria:', erro);
+      });
   };
 
   return (
@@ -124,10 +133,15 @@ const DashboardCategoria = () => {
               <th>nº de gastos associados </th>
             </tr>
           </thead>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
+          <tbody>
+            {categorias.map((categoria) => (
+              <tr key={categoria.id}>
+                <td>{categoria.nome}</td>
+                <td>{categoria.descricao}</td>
+              </tr>
+            ))}
+          </tbody>
+          
         </table>
       </div>
       {isCadastrarModalOpen && (

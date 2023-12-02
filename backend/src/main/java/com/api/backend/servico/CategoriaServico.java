@@ -23,7 +23,6 @@ public class CategoriaServico {
         return categoriaRepositorio.save(categoria);
     }
 
-    // listar todas as categorias
     public List<CategoriaModelo> listaCategorias() {
         Iterable<CategoriaModelo> categoriasIterable = categoriaRepositorio.findAll();
         List<CategoriaModelo> categoriasList = new ArrayList<>();
