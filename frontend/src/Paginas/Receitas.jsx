@@ -97,11 +97,11 @@ const DashboardReceita = () => {
   const navigate = useNavigate(); 
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
   const [isAlterarModalOpen, setIsAlterarModalOpen] = useState(false);
-  const [receitas, setReceitas] = useState([]);
+  const [isExcluirModalOpen, setIsExcluirModalOpen] = useState(false);
   const [selectedReceitaId, setSelectedReceitaId] = useState(null);
   const [selectedReceita, setSelectedReceita] = useState(null);
-  const [isExcluirModalOpen, setIsExcluirModalOpen] = useState(false);
   const [receitaParaExcluir, setReceitaParaExcluir] = useState(null);
+  const [receitas, setReceitas] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:8080/receitas') 
@@ -202,10 +202,7 @@ const DashboardReceita = () => {
             Cadastrar
           </button>
           <button
-            className="update-button"
-            onClick={() => handleActionButtonClick('Alterar')}
-            disabled={selectedReceitaId === null}
-          >
+            className="update-button" onClick={() => handleActionButtonClick('Alterar')}>
             Alterar
           </button>
           <button className="del-button" onClick={() => handleActionButtonClick('Excluir')}>
@@ -225,7 +222,7 @@ const DashboardReceita = () => {
             Faturas
           </div>
           <div className="menu-item menu-categoria" onClick={() => handleMenuClick('Categorias')}>
-            Categoria
+            Categorias
           </div>
           <div className="menu-item menu-sair" onClick={() => handleMenuClick('Sair')}>
             Sair
@@ -235,7 +232,6 @@ const DashboardReceita = () => {
           <thead>
             <tr>
               <th></th>
-              <th>Id</th>
               <th>Nome</th>
               <th>Valor</th>
             </tr>
@@ -251,7 +247,6 @@ const DashboardReceita = () => {
                       onChange={() => setSelectedReceitaId(receita.id)}
                     />
                   </td>
-                  <td>{receita.id}</td>
                   <td>{receita.nome}</td>
                   <td>{receita.valor}</td>
                 </tr>

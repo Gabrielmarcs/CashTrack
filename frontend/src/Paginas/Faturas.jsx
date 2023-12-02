@@ -7,7 +7,7 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
   const [nome, setNome] = useState('');
 
   const handleAdicionar = () => {
-    onAdicionar({ nome}); //id e contador é automatico, valor é associado com os gastos e inicia com 0 (eu acho)
+    onAdicionar({ nome}); 
     onClose();
   };
 
@@ -100,15 +100,11 @@ const DashboardFatura = () => {
         <table className="dashboard-table">
           <thead>
             <tr>
-              <th>Id</th>
               <th>Nome</th>
               <th>nº de gastos associados </th>
               <th>Valor total</th>
             </tr>
           </thead>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
           <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
         </table>
       </div>

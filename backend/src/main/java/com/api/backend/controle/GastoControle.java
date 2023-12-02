@@ -1,7 +1,6 @@
 package com.api.backend.controle;
 
 import com.api.backend.modelo.GastoModelo;
-import com.api.backend.repositorio.UsuarioRepositorio;
 import com.api.backend.servico.GastoServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +16,6 @@ public class GastoControle {
 
     private final GastoServico gastoService;
     
-    @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
-
     @Autowired
     public GastoControle(GastoServico gastoService) {
         this.gastoService = gastoService;

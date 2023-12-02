@@ -67,7 +67,7 @@ public class GastoServico {
             FaturaModelo fatura = gasto.getFatura();
             CategoriaModelo categoria = gasto.getCategoria();
     
-            gastoRepository.deleteById(id); // Remove o gasto do repositório
+            
     
             fatura.removerGasto(gasto);
     

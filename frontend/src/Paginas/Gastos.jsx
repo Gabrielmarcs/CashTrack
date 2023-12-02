@@ -75,7 +75,8 @@ const DashboardGasto = () => {
           <button className="add-button" onClick={() => handleActionButtonClick('Cadastrar')}>
             Cadastrar
           </button>
-          <button className="update-button" onClick={() => handleActionButtonClick('Alterar')}>
+          <button
+            className="update-button" onClick={() => handleActionButtonClick('Alterar')}>
             Alterar
           </button>
           <button className="del-button" onClick={() => handleActionButtonClick('Excluir')}>
@@ -110,7 +111,6 @@ const DashboardGasto = () => {
           <thead>
             <tr>
               <th></th>
-              <th>Id</th>
               <th>Descricao</th>
               <th>Valor</th>
               <th>Fatura</th>
@@ -127,7 +127,6 @@ const DashboardGasto = () => {
                       onChange={() => setSelectedGastoId(gasto.id)}
                     />
                   </td>
-                  <td>{gasto.id}</td>
                   <td>{gasto.descricao}</td>
                   <td>{gasto.valor}</td>
                   <td>{gasto.fatura}</td>

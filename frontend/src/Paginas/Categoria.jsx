@@ -9,7 +9,7 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
   const [descricao, setDescricao] = useState('');
 
   const handleAdicionar = () => {
-    onAdicionar({ nome, descricao}); //id e contador é automatico, valor é associado com os gastos e inicia com 0 (eu acho)
+    onAdicionar({ nome, descricao}); 
     onClose();
   };
 
@@ -44,6 +44,7 @@ const DashboardCategoria = () => {
   useEffect(() => {
     axios.get('http://localhost:8080/categoria') 
     .then((response) => {
+      console.log(response.data); // Adicione esta linha para depurar
       setCategoria(response.data);
     })
     .catch((erro) => {
@@ -110,13 +111,13 @@ const DashboardCategoria = () => {
       <div className="dashboard-content">
         <div className="dashboard-menu">
           <div className="menu-item menu-receita" onClick={() => handleMenuClick('Receitas')}>
-            Receita
+            Receitas
           </div>
           <div className="menu-item menu-gasto" onClick={() => handleMenuClick('Gastos')}>
-            Gasto
+            Gastos
           </div>
           <div className="menu-item menu-fatura" onClick={() => handleMenuClick('Faturas')}>
-            Fatura
+            Faturas
           </div>
           <div className="menu-item menu-categoria" onClick={() => handleMenuClick('Categorias')}>
             Categorias
@@ -138,6 +139,7 @@ const DashboardCategoria = () => {
               <tr key={categoria.id}>
                 <td>{categoria.nome}</td>
                 <td>{categoria.descricao}</td>
+                <td>{categoria.contador_gastos}</td>
               </tr>
             ))}
           </tbody>

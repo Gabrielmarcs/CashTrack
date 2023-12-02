@@ -34,7 +34,19 @@ public class FaturaServico {
 
     //deletar uma fatura
     public void deletaFatura(Long id) {
-        faturaRepositorio.deleteById(id);
+        Optional<FaturaModelo> faturaASerRemovida = faturaRepositorio.findById(id);
+    
+        if (faturaASerRemovida.isPresent()) {
+            FaturaModelo fatura = faturaASerRemovida.get();
+            
+            if (fatura.podeExcluir()) {
+                faturaRepositorio.deleteById(id);
+            } else {
+                throw new RuntimeException("Fatura não pode ser excluída pois possui gastos associados");
+            }
+        } else {
+            throw new RuntimeException("Fatura não encontrada");
+        }
     }
 
     //buscar uma fatura

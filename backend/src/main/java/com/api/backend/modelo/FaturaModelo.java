@@ -46,8 +46,9 @@ public class FaturaModelo {
     public void removerGasto(GastoModelo gasto) {
         if (gasto != null && gastos.remove(gasto)) {
             gasto.setFatura(null);
-            atualizarValorTotal();
             contadorGastos = gastos.size();
+            atualizarValorTotal();
+            
         }
     }
     
@@ -55,11 +56,15 @@ public class FaturaModelo {
     // Método para calcular e atualizar o valor total da fatura
     private void atualizarValorTotal() {
         valorTotal = 0; // Define o valor total como zero antes de recalcular
-    
+
         for (GastoModelo gasto : gastos) {
-            valorTotal = (valorTotal + (gasto.getValor() / 2));
-        }
+            valorTotal += gasto.getValor();
+        } 
     }
     
+        // Método para excluir uma fatura
+        public boolean podeExcluir() {
+            return gastos.isEmpty();
+        }
     
 }

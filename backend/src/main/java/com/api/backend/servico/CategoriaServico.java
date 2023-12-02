@@ -42,3 +42,4 @@ public class CategoriaServico {
         categoriaRepositorio.deleteById(id);
     }
 }
+
