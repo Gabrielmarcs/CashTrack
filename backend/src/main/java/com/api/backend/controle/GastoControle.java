@@ -43,4 +43,9 @@ public class GastoControle {
     public Iterable<GastoModelo> listarGastos(){
         return gs.listarGastos();
     }
+
+    @PostMapping("/{gastoId}/associar-categoria/{categoriaId}")
+    public ResponseEntity<?> associarCategoriaAoGasto(@PathVariable long gastoId, @PathVariable long categoriaId) {
+        return gs.associarCategoriaAoGasto(gastoId, categoriaId);
+    }
 }

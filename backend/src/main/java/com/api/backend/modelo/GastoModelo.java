@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -24,4 +26,9 @@ public class GastoModelo {
     private String metodoPagamento;
     private double valor;
     
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private CategoriaModelo categoria;
+
+
 }
