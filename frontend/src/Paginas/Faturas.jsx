@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../Estilos/Styles.css';
 
@@ -33,6 +33,22 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 const DashboardFatura = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
+  const [faturas, setFaturas] = useState([]);
+
+  useEffect(() => {
+    // Função para buscar as faturas do backend ao carregar a página
+    const fetchFaturas = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/fatura/listar');
+        const data = await response.json();
+        setFaturas(data);
+      } catch (error) {
+        console.error('Erro ao buscar faturas:', error);
+      }
+    };
+
+    fetchFaturas();
+  }, []);
 
   const handleMenuClick = (menuItem) => {
     if (menuItem === 'Receitas') {
@@ -58,9 +74,30 @@ const DashboardFatura = () => {
     }
   };
 
-  const handleAdicionarFatura = (dados) => {
-    // Adicionar lógica para add fatura no banco de dados
-    // Fazer integraçao
+  const handleAdicionarFatura = async (dados) => {
+    try {
+      const response = await fetch('http://localhost:8080/fatura/cadastrar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dados),
+      });
+  
+      if (response.ok) {
+        const novaFatura = await response.json();
+  
+        // Atualiza a lista de faturas com a nova fatura cadastrada
+        setFaturas([...faturas, novaFatura]);
+        setIsCadastrarModalOpen(false); // Fecha o modal após o cadastro
+      } else {
+        console.error('Erro ao cadastrar a fatura.');
+        // Adicione aqui a lógica para lidar com o erro, se necessário
+      }
+    } catch (error) {
+      console.error('Erro ao cadastrar a fatura:', error);
+      // Adicione aqui a lógica para lidar com o erro, se necessário
+    }
   };
 
   return (
@@ -101,11 +138,18 @@ const DashboardFatura = () => {
           <thead>
             <tr>
               <th>Nome</th>
-              <th>nº de gastos associados </th>
               <th>Valor total</th>
             </tr>
           </thead>
-          <tbody>{/* Adicione os dados da tabela aqui */}</tbody>
+          <tbody>
+            {faturas.map((fatura) => (
+              <tr key={fatura.id}>
+                <td>{fatura.nome}</td>
+                <td>{"R$" + fatura.valorTotal}</td>
+              </tr>
+            ))}
+
+          </tbody>
         </table>
       </div>
       {isCadastrarModalOpen && (
