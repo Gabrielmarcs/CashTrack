@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import SelectCategoria from '../Paginas/SelectCategoria';
+import axios from 'axios';
 import '../Estilos/Styles.css';
 
 // Componente para o modal de Cadastro
@@ -36,6 +37,21 @@ const DashboardGasto = () => {
   const [gastos, setGastos] = useState([]);
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
   const [selectedGastoId, setSelectedGastoId] = useState(null);
+
+  useEffect(() => {
+    // Função para buscar as faturas do backend ao carregar a página
+    const fetchGastos = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/gastos/listar');
+        const data = await response.json();
+        setGastos(data);
+      } catch (error) {
+        console.error('Erro ao buscar os gastos:', error);
+      }
+    };
+
+    fetchGastos();
+  }, []);
 
 
   const handleMenuClick = (menuItem) => {
@@ -113,7 +129,6 @@ const DashboardGasto = () => {
               <th></th>
               <th>Descricao</th>
               <th>Valor</th>
-              <th>Fatura</th>
             </tr>
           </thead>
           <tbody>
@@ -129,7 +144,6 @@ const DashboardGasto = () => {
                   </td>
                   <td>{gasto.descricao}</td>
                   <td>{gasto.valor}</td>
-                  <td>{gasto.fatura}</td>
                 </tr>
               ))
             }
