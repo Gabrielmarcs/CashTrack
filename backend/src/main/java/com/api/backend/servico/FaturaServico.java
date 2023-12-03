@@ -1,56 +1,47 @@
 package com.api.backend.servico;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.api.backend.modelo.FaturaModelo;
+import com.api.backend.modelo.RespostaModelo;
 import com.api.backend.repositorio.FaturaRepositorio;
 
 @Service
 public class FaturaServico {
-    private final FaturaRepositorio faturaRepositorio;
+    
+    @Autowired
+    private FaturaRepositorio fr;
 
     @Autowired
-    public FaturaServico(FaturaRepositorio faturaRepositorio) {
-        this.faturaRepositorio = faturaRepositorio;
+    private RespostaModelo rm;
+
+    //listar faturas
+    public Iterable<FaturaModelo> listarFaturas(){
+        return fr.findAll();
     }
 
-    //adicionar uma fatura
-    public FaturaModelo addFatura(FaturaModelo fatura) {
-        return faturaRepositorio.save(fatura);
-    }
-
-    //listar todas as faturas
-    public Iterable<FaturaModelo> listaFaturas() {
-        return faturaRepositorio.findAll();
-    }
-
-    //atualizar uma fatura
-    public FaturaModelo atualizaFatura(FaturaModelo fatura) {
-        return faturaRepositorio.save(fatura);
-    }
-
-    //deletar uma fatura
-    public void deletaFatura(Long id) {
-        Optional<FaturaModelo> faturaASerRemovida = faturaRepositorio.findById(id);
-    
-        if (faturaASerRemovida.isPresent()) {
-            FaturaModelo fatura = faturaASerRemovida.get();
-            
-            if (fatura.podeExcluir()) {
-                faturaRepositorio.deleteById(id);
-            } else {
-                throw new RuntimeException("Fatura não pode ser excluída pois possui gastos associados");
-            }
+    //cadastrar/alterar fatura
+    public ResponseEntity<?> cadastrarAlterar(FaturaModelo fm, String acao){
+        if (fm.getNome().isEmpty()) {
+            rm.setMensagem("Preencha todos os campos!");
+            return new ResponseEntity<>(fm, HttpStatus.BAD_REQUEST);
         } else {
-            throw new RuntimeException("Fatura não encontrada");
+            if (acao.equals("cadastrar")) {
+                return new ResponseEntity<FaturaModelo>(fr.save(fm), HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<FaturaModelo>(fr.save(fm), HttpStatus.OK);
+            }
+            
         }
     }
 
-    //buscar uma fatura
-    public Optional<FaturaModelo> buscaFatura(Long id) {
-        return faturaRepositorio.findById(id);
+    //remover fatura
+    public ResponseEntity<RespostaModelo> removerFatura(long id){
+        fr.deleteById(id);
+        rm.setMensagem("Fatura removida com sucesso!");
+        return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
     }
 }

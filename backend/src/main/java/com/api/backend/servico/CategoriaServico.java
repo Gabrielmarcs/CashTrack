@@ -1,45 +1,46 @@
 package com.api.backend.servico;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.api.backend.modelo.CategoriaModelo;
+import com.api.backend.modelo.RespostaModelo;
 import com.api.backend.repositorio.CategoriaRepositorio;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CategoriaServico {
-    private final CategoriaRepositorio categoriaRepositorio;
+    
+    @Autowired
+    private CategoriaRepositorio cr;
 
     @Autowired
-    public CategoriaServico(CategoriaRepositorio categoriaRepositorio) {
-        this.categoriaRepositorio = categoriaRepositorio;
+    private RespostaModelo rm;
+
+    //listar categorias
+    public Iterable<CategoriaModelo> listarCategorias(){
+        return cr.findAll();
     }
 
-    // adicionar uma categoria
-    public CategoriaModelo addCategoria(CategoriaModelo categoria) {
-        return categoriaRepositorio.save(categoria);
+    //cadastrar/alterar categoria
+    public ResponseEntity<?> cadastrarAlterar(CategoriaModelo cm, String acao){
+        if (cm.getNome().isEmpty() || cm.getDescricao().isEmpty()) {
+            rm.setMensagem("Preencha todos os campos!");
+            return new ResponseEntity<>(cm, HttpStatus.BAD_REQUEST);
+        } else {
+            if (acao.equals("cadastrar")) {
+                return new ResponseEntity<CategoriaModelo>(cr.save(cm), HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<CategoriaModelo>(cr.save(cm), HttpStatus.OK);
+            } 
+        }
     }
 
-    public List<CategoriaModelo> listaCategorias() {
-        Iterable<CategoriaModelo> categoriasIterable = categoriaRepositorio.findAll();
-        List<CategoriaModelo> categoriasList = new ArrayList<>();
-
-        categoriasIterable.forEach(categoriasList::add); // Convertendo Iterable para List
-
-        return categoriasList;
-    }
-
-    // atualizar uma categoria
-    public CategoriaModelo atualizaCategoria(CategoriaModelo categoria) {
-        return categoriaRepositorio.save(categoria);
-    }
-
-    // deletar uma categoria
-    public void deletaCategoria(Long id) {
-        categoriaRepositorio.deleteById(id);
+    //remover categoria
+    public ResponseEntity<RespostaModelo> removerCategoria(long id){
+        cr.deleteById(id);
+        rm.setMensagem("Categoria removida com sucesso!");
+        return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
     }
 }
-

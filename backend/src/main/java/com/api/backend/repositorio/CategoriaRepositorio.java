@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.api.backend.modelo.CategoriaModelo;
 
 @Repository
-public interface CategoriaRepositorio extends CrudRepository<CategoriaModelo, Long>{
+public interface CategoriaRepositorio extends CrudRepository<CategoriaModelo, Long> {
+    
 }

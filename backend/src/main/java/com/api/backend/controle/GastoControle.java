@@ -1,55 +1,46 @@
 package com.api.backend.controle;
 
-import com.api.backend.modelo.GastoModelo;
-import com.api.backend.servico.GastoServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
+import com.api.backend.modelo.GastoModelo;
+import com.api.backend.modelo.RespostaModelo;
+import com.api.backend.servico.GastoServico;
 
+@RequestMapping("/gastos")
 @RestController
-@RequestMapping("/gasto")
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 public class GastoControle {
-
-    private final GastoServico gastoService;
     
     @Autowired
-    public GastoControle(GastoServico gastoService) {
-        this.gastoService = gastoService;
+    private GastoServico gs;
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<RespostaModelo> removerGasto(@PathVariable long id){
+        return gs.removerGasto(id);
     }
 
-
-    @PostMapping("/cadastrar") 
-    public GastoModelo cadastrarGasto(@RequestBody GastoModelo gasto) {
-        Long idCategoria = gasto.getCategoria().getId();
-        Long idFatura = gasto.getFatura().getId();
-        return gastoService.addGasto(gasto, idCategoria, idFatura);
+    @PutMapping("/alterar")
+    public ResponseEntity<?> alterarGasto(@RequestBody GastoModelo gm){
+        return gs.cadastrarAlterar(gm, "alterar");
     }
 
-    @GetMapping
-    public ResponseEntity<List<GastoModelo>> listarTodosGastos() {
-        return ResponseEntity.ok(gastoService.listarTodosGastos());
+    @PostMapping("/cadastrar")
+    public ResponseEntity<?> cadastrarGasto(@RequestBody GastoModelo gm){
+        return gs.cadastrarAlterar(gm, "cadastrar");
     }
 
-    @PutMapping("atualizar/{id}")
-    public ResponseEntity<GastoModelo> updateGasto(@PathVariable Long id, @RequestBody GastoModelo gastoAtualizado) {
-        return ResponseEntity.ok(gastoService.updateGasto(id, gastoAtualizado));
+    @GetMapping("/listar")
+    public Iterable<GastoModelo> listarGastos(){
+        return gs.listarGastos();
     }
-
-    @DeleteMapping("deletar/{id}")
-    public ResponseEntity<?> deleteGasto(@PathVariable Long id) {
-        gastoService.deleteGasto(id);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<GastoModelo> detalharGasto(@PathVariable Long id) {
-    Optional<GastoModelo> gasto = gastoService.detalharGasto(id);
-        return gasto.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
 }

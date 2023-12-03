@@ -2,58 +2,45 @@ package com.api.backend.controle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import com.api.backend.modelo.CategoriaModelo;
-import com.api.backend.repositorio.CategoriaRepositorio;
-import com.api.backend.servico.CategoriaServico;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.api.backend.modelo.CategoriaModelo;
+import com.api.backend.modelo.RespostaModelo;
+import com.api.backend.servico.CategoriaServico;
 
-@RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/categoria")
+@RestController
+@CrossOrigin("*")
 public class CategoriaControle {
     
     @Autowired
-    private final CategoriaRepositorio categoriaRepositorio;
-    private final CategoriaServico categoriaServico;
+    private CategoriaServico cs;
 
-    public CategoriaControle(CategoriaRepositorio categoriaRepositorio, CategoriaServico categoriaServico) {
-        this.categoriaRepositorio = categoriaRepositorio;
-        this.categoriaServico = categoriaServico;
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<RespostaModelo> removerCategoria(@PathVariable long id){
+        return cs.removerCategoria(id);
+    }
+
+    @PutMapping("/alterar")
+    public ResponseEntity<?> alterarCategoria(@RequestBody CategoriaModelo cm){
+        return cs.cadastrarAlterar(cm, "alterar");
     }
 
     @PostMapping("/cadastrar")
-    public CategoriaModelo cadastrarCategoria(@RequestBody CategoriaModelo categoria) {
-        return categoriaServico.addCategoria(categoria);
+    public ResponseEntity<?> cadastrarCategoria(@RequestBody CategoriaModelo cm){
+        return cs.cadastrarAlterar(cm, "cadastrar");
     }
 
-    @GetMapping
-    public List<CategoriaModelo> listarCategorias() {
-        return categoriaServico.listaCategorias();
-    }
-
-    @PutMapping("/atualizar/{id}")
-    public ResponseEntity<CategoriaModelo> atualizarCategoria(@PathVariable Long id, @RequestBody CategoriaModelo categoria) {
-        if (categoriaRepositorio.existsById(id)) {
-            categoria.setId(id);
-            CategoriaModelo updatedCategoria = categoriaServico.atualizaCategoria(categoria);
-            return ResponseEntity.ok(updatedCategoria);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<?> deletarCategoria(@PathVariable Long id) {
-        if (categoriaRepositorio.existsById(id)) {
-            categoriaServico.deletaCategoria(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/listar")
+    public Iterable<CategoriaModelo> listarCategorias(){
+        return cs.listarCategorias();
     }
 }

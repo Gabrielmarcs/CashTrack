@@ -1,6 +1,10 @@
 package com.api.backend.modelo;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,16 +20,8 @@ public class GastoModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double valor;
-    private String metodoPagamento;
     private String descricao;
-
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private CategoriaModelo categoria;
-
-    @ManyToOne
-    @JoinColumn(name = "fatura_id")
-    private FaturaModelo fatura;
-
+    private String metodoPagamento;
+    private double valor;
+    
 }
