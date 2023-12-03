@@ -33,6 +33,8 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 const DashboardFatura = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
+  const [selectedFaturaId, setSelectedFaturaId] = useState(null);
+
   const [faturas, setFaturas] = useState([]);
 
   useEffect(() => {
@@ -137,13 +139,20 @@ const DashboardFatura = () => {
         <table className="dashboard-table">
           <thead>
             <tr>
+              <th></th>
               <th>Nome</th>
               <th>Valor total</th>
             </tr>
           </thead>
           <tbody>
             {faturas.map((fatura) => (
-              <tr key={fatura.id}>
+              <tr key={fatura.id} onClick={() => setSelectedFaturaId(fatura.id)}>
+                <td>
+                  <input type="checkbox"
+                  checked={fatura.id === selectedFaturaId}
+                  onChange={() => setSelectedFaturaId(fatura.id)}
+                   />
+                </td>
                 <td>{fatura.nome}</td>
                 <td>{"R$" + fatura.valorTotal}</td>
               </tr>
