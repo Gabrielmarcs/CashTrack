@@ -1,0 +1,325 @@
+{
+  "id": "ebf56407-4a13-4b6a-8512-b01b19d4dcf0",
+  "version": "2.0",
+  "name": "CashTrack",
+  "url": "http://localhost:3000/dashboard/receitas",
+  "tests": [{
+    "id": "e671ffb8-bd73-432c-ae13-c42c214ac1e9",
+    "name": "CT-001 - Fazer Login",
+    "commands": [{
+      "id": "9c8d0138-14cc-44c6-bbd6-98ebd574e4a7",
+      "comment": "",
+      "command": "//open",
+      "target": "http://localhost:3000/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "295a0f9a-7f11-4514-81a8-c19fb220c25f",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.inputField:nth-child(1)",
+      "targets": [
+        ["css=.inputField:nth-child(1)", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "df438b56-421b-482c-beb4-ba7e41a76212",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.inputField:nth-child(2)",
+      "targets": [
+        ["css=.inputField:nth-child(2)", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "07c6d5f3-480e-43d8-be43-f1452d8ff199",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.loginButton",
+      "targets": [
+        ["css=.loginButton", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1217c4b0-95fe-4bd1-8f32-6f677c731218",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputField:nth-child(1)",
+      "targets": [
+        ["css=.inputField:nth-child(1)", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a11dabe9-7b27-4b2e-bac1-33bdd66e82d8",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputField:nth-child(1)",
+      "targets": [
+        ["css=.inputField:nth-child(1)", "css:finder"],
+        ["xpath=//input[@value='lislailapereira@gmail.com']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lislailapereira@gmail.com"
+    }, {
+      "id": "3154918a-1762-4b51-b5c7-eff777ac4e33",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputField:nth-child(2)",
+      "targets": [
+        ["css=.inputField:nth-child(2)", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bc805fde-3c2b-4ca3-8e4c-d9195965242f",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputField:nth-child(2)",
+      "targets": [
+        ["css=.inputField:nth-child(2)", "css:finder"],
+        ["xpath=//input[@value='12345']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "12345"
+    }, {
+      "id": "89d158a3-8728-4cc9-b8e4-a128694e6d2d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.loginButton",
+      "targets": [
+        ["css=.loginButton", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "958a855a-ad4d-45d2-b5ad-face0294c452",
+    "name": "CT-002 - Fazer Cadastro",
+    "commands": [{
+      "id": "1ac70639-1bc8-443d-9f61-0e40346e5469",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/cadastro",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "47a4caf5-8bc8-46d9-a13e-4f9a0d3141cf",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.inputField:nth-child(1)",
+      "targets": [
+        ["css=.inputField:nth-child(1)", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9c77109b-c157-4302-a7c0-98205d5ae3f7",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.inputField:nth-child(2)",
+      "targets": [
+        ["css=.inputField:nth-child(2)", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b5f2d091-fdd3-436b-a9d4-32956c3ceec4",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.inputField:nth-child(3)",
+      "targets": [
+        ["css=.inputField:nth-child(3)", "css:finder"],
+        ["xpath=(//input[@value=''])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab3c4d8f-f21f-4822-96f3-13d6665565cb",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.cadastroButton",
+      "targets": [
+        ["css=.cadastroButton", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Cadastrar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "877b9812-0d3a-454a-ba1b-7046b0a699a2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputField:nth-child(1)",
+      "targets": [
+        ["css=.inputField:nth-child(1)", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "632b26c7-5745-4588-b408-deff358a298e",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputField:nth-child(1)",
+      "targets": [
+        ["css=.inputField:nth-child(1)", "css:finder"],
+        ["xpath=//input[@value='Lislaila Tarsila Pereira']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Lislaila Tarsila Pereira"
+    }, {
+      "id": "58fa5a57-9c2f-453e-86b5-2b06c2c2b212",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputField:nth-child(2)",
+      "targets": [
+        ["css=.inputField:nth-child(2)", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9647dc54-fb1a-40b1-bb4a-0939f4ebad71",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputField:nth-child(2)",
+      "targets": [
+        ["css=.inputField:nth-child(2)", "css:finder"],
+        ["xpath=//input[@value='lislailapereira@gmail.com']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "lislailapereira@gmail.com"
+    }, {
+      "id": "f7cb40b8-5f4f-4117-bb34-f8e274b48a84",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputField:nth-child(3)",
+      "targets": [
+        ["css=.inputField:nth-child(3)", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ae45d4d-55fd-4295-b7a7-5db178fa5d6a",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputField:nth-child(3)",
+      "targets": [
+        ["css=.inputField:nth-child(3)", "css:finder"],
+        ["xpath=//input[@value='12345']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "12345"
+    }, {
+      "id": "f7c3cc0e-7920-463f-b5cc-5dc76336ecbb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.cadastroButton",
+      "targets": [
+        ["css=.cadastroButton", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/form/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Cadastrar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "b7ab9c69-1b45-4587-8e80-467c6d39745b",
+    "name": "CT-003 - Excluir Receita",
+    "commands": [{
+      "id": "d95d14d6-59ab-4aec-8e95-dedb4edea01e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/dashboard/receitas",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0168e0ad-506d-4854-a1d1-2fb79687d4dd",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(1) input",
+      "targets": [
+        ["css=tr:nth-child(1) input", "css:finder"],
+        ["xpath=//input[@type='checkbox']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/table/tbody/tr/td/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8818fc29-62a5-4194-bc6a-0cbc53ba6d1c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.del-button",
+      "targets": [
+        ["css=.del-button", "css:finder"],
+        ["xpath=//div[@id='root']/div/header/div/button[3]", "xpath:idRelative"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Excluir')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9eb8a2a6-5e84-4c8e-9338-0f9ed890b9c6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add-button-model",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4343d9cc-556d-4084-99d2-df4763364495",
+      "comment": "",
+      "command": "waitForElementNotPresent",
+      "target": "css=td:nth-child(2)",
+      "targets": [
+        ["css=td:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/table/tbody/tr/td[2]", "xpath:idRelative"],
+        ["xpath=//td[2]", "xpath:position"],
+        ["xpath=//td[contains(.,'vale alimentacao')]", "xpath:innerText"]
+      ],
+      "value": "50000"
+    }]
+  }],
+  "suites": [{
+    "id": "d13cc685-117f-4357-b100-78d1e6ab2795",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["e671ffb8-bd73-432c-ae13-c42c214ac1e9"]
+  }],
+  "urls": ["http://localhost:3000/login", "http://localhost:3000/cadastro", "http://localhost:3000/dashboard/receitas"],
+  "plugins": []
+}
