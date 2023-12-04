@@ -83,4 +83,13 @@ public class GastoServico {
         return gastoRepositorio.save(gasto);
     }
 
+    public void excluirGastoPorId(long gastoId) {
+        GastoModelo gasto = gastoRepositorio.findById(gastoId)
+            .orElseThrow(() -> new RuntimeException("Gasto não encontrado"));
+
+        gastoRepositorio.delete(gasto);
+    }
+
+    
+
 }

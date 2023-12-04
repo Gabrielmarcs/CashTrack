@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,6 +83,13 @@ public class GastoControle {
         }
     }
 
-    
-
+    @DeleteMapping("/excluir/{gastoId}")
+    public ResponseEntity<String> excluirGasto(@PathVariable long gastoId) {
+        try {
+            gastoServico.excluirGastoPorId(gastoId);
+            return new ResponseEntity<>("Gasto excluído com sucesso.", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Erro ao excluir o gasto: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
