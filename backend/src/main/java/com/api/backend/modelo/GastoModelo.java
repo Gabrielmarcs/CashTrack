@@ -23,12 +23,13 @@ public class GastoModelo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
-    private String metodoPagamento;
     private double valor;
     
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private CategoriaModelo categoria;
 
-
+    @ManyToOne
+    @JoinColumn(name = "fatura_id")
+    private FaturaModelo fatura;
 }

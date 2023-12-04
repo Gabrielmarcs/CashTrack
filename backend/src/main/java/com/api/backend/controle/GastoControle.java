@@ -1,51 +1,50 @@
 package com.api.backend.controle;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.backend.modelo.GastoModelo;
-import com.api.backend.modelo.RespostaModelo;
 import com.api.backend.servico.GastoServico;
+import com.api.backend.modelo.GastoModelo;
 
-@RequestMapping("/gastos")
 @RestController
-@CrossOrigin("*")
+@RequestMapping("/gastos")
 public class GastoControle {
-    
+
+    private final GastoServico gastoServico;
+
     @Autowired
-    private GastoServico gs;
-
-    @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<RespostaModelo> removerGasto(@PathVariable long id){
-        return gs.removerGasto(id);
-    }
-
-    @PutMapping("/alterar")
-    public ResponseEntity<?> alterarGasto(@RequestBody GastoModelo gm){
-        return gs.cadastrarAlterar(gm, "alterar");
+    public GastoControle(GastoServico gastoServico) {
+        this.gastoServico = gastoServico;
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrarGasto(@RequestBody GastoModelo gm){
-        return gs.cadastrarAlterar(gm, "cadastrar");
+    public ResponseEntity<String> cadastrarGasto(@RequestBody GastoModelo gasto) {
+        try {
+            GastoModelo gastoCriado = gastoServico.cadastrar(
+                gasto.getDescricao(),
+                gasto.getValor(),
+                gasto.getCategoria().getId(),
+                gasto.getFatura().getId()
+            );
+
+            return new ResponseEntity<>("Gasto cadastrado com sucesso. ID: " + gastoCriado.getId(), HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Erro ao cadastrar o gasto: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/listar")
-    public Iterable<GastoModelo> listarGastos(){
-        return gs.listarGastos();
-    }
-
-    @PostMapping("/{gastoId}/associar-categoria/{categoriaId}")
-    public ResponseEntity<?> associarCategoriaAoGasto(@PathVariable long gastoId, @PathVariable long categoriaId) {
-        return gs.associarCategoriaAoGasto(gastoId, categoriaId);
+    public ResponseEntity<?> listarGastos() {
+        try {
+            return new ResponseEntity<>(gastoServico.listar(), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Erro ao listar os gastos: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

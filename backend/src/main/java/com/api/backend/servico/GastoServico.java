@@ -7,23 +7,48 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.api.backend.modelo.CategoriaModelo;
+import com.api.backend.modelo.FaturaModelo;
 import com.api.backend.modelo.GastoModelo;
 import com.api.backend.modelo.RespostaModelo;
 import com.api.backend.repositorio.CategoriaRepositorio;
+import com.api.backend.repositorio.FaturaRepositorio;
 import com.api.backend.repositorio.GastoRepositorio;
 
 @Service
 public class GastoServico {
     
-    @Autowired
-    private GastoRepositorio gr;
+    private final GastoRepositorio gastoRepositorio;
+    private final CategoriaRepositorio categoriaRepositorio;
+    private final FaturaRepositorio faturaRepositorio;
+
 
     @Autowired
-    private RespostaModelo rm;
+    public GastoServico(GastoRepositorio gastoRepositorio, CategoriaRepositorio categoriaRepositorio, FaturaRepositorio faturaRepositorio) {
+        this.gastoRepositorio = gastoRepositorio;
+        this.categoriaRepositorio = categoriaRepositorio;
+        this.faturaRepositorio = faturaRepositorio;
+    }
 
-    @Autowired
-    private CategoriaRepositorio cr;
 
+    public GastoModelo cadastrar(String descricao, double valor, long categoriaId, long faturaId) {
+        CategoriaModelo categoria = categoriaRepositorio.findById(categoriaId).orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+        FaturaModelo fatura = faturaRepositorio.findById(faturaId).orElseThrow(() -> new RuntimeException("Fatura não encontrada"));
+
+        GastoModelo gasto = new GastoModelo();
+        gasto.setDescricao(descricao);
+        gasto.setValor(valor);
+        gasto.setCategoria(categoria);
+        gasto.setFatura(fatura);
+
+        // Salvar o gasto
+        return gastoRepositorio.save(gasto);
+    }
+
+    public Iterable<GastoModelo> listar() {
+        return gastoRepositorio.findAll();
+    }
+
+    /* 
     //listar gastos
     public Iterable<GastoModelo> listarGastos(){
         return gr.findAll();
@@ -65,4 +90,5 @@ public class GastoServico {
             return new ResponseEntity<>(rm, HttpStatus.BAD_REQUEST);
         }
     }
+    */
 }

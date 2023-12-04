@@ -34,7 +34,6 @@ public class FaturaServico {
             } else {
                 return new ResponseEntity<FaturaModelo>(fr.save(fm), HttpStatus.OK);
             }
-            
         }
     }
 
