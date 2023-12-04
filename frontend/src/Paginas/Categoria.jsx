@@ -79,21 +79,30 @@ const DashboardCategoria = () => {
     }
   };
 
-  const handleAdicionarCategoria = (dados) => {
-    axios.post('http://localhost:8080/categoria/cadastrar', dados)
-      .then((response) => {
-        // Atualiza a lista de categorias após adicionar com sucesso
-        axios.get('http://localhost:8080/categoria')
-          .then((response) => {
-            setCategorias(response.data); // Atualiza a lista de categorias
-          })
-          .catch((erro) => {
-            console.log('Erro ao obter categorias:', erro);
-          });
-      })
-      .catch((erro) => {
-        console.log('Erro ao adicionar categoria:', erro);
+  const handleAdicionarCategoria = async (dados) => {
+    try {
+      const response = await fetch('http://localhost:8080/categoria/cadastrar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dados),
       });
+  
+      if (response.ok) {
+        const novaCategoria = await response.json();
+  
+        // Atualiza a lista de faturas com a nova fatura cadastrada
+        setCategorias([...categorias, novaCategoria]);
+        setIsCadastrarModalOpen(false); // Fecha o modal após o cadastro
+      } else {
+        console.error('Erro ao cadastrar a categoria.');
+        // Adicione aqui a lógica para lidar com o erro, se necessário
+      }
+    } catch (error) {
+      console.error('Erro ao cadastrar a categoria:', error);
+      // Adicione aqui a lógica para lidar com o erro, se necessário
+    }
   };
 
   return (
@@ -150,7 +159,7 @@ const DashboardCategoria = () => {
                 </td>
                 <td>{categoria.nome}</td>
                 <td>{categoria.descricao}</td>
-                <td>{categoria.contador_gastos}</td>
+                <td>{categoria.qtdeGastos}</td>
               </tr>
             ))}
           </tbody>

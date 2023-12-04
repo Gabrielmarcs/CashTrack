@@ -123,18 +123,18 @@ const DashboardFatura = () => {
 
   const handleActionButtonClick = (action) => {
     if (action === 'Cadastrar') {
-      // Abre o modal de cadastro
-      setIsCadastrarModalOpen(true);
+        // Abre o modal de cadastro
+        setIsCadastrarModalOpen(true);
     } else if (action === 'Alterar' && selectedFaturaId !== null){
-      // Abre o modal de alteração para a fatura selecionada
-      const faturaSelecionada = faturas.find(fatura => fatura.id === selectedFaturaId);
-      setSelectedFatura(faturaSelecionada);
-      setIsAlterarModalOpen(true);
+        // Abre o modal de alteração para a fatura selecionada
+        const faturaSelecionada = faturas.find(fatura => fatura.id === selectedFaturaId);
+        setSelectedFatura(faturaSelecionada);
+        setIsAlterarModalOpen(true);
     } else if (action === 'Excluir' && selectedFaturaId !== null){
-      const faturaSelecionada = faturas.find(fatura => fatura.id === selectedFaturaId);
-      setFaturaParaExcluir(faturaSelecionada);
-      setIsExcluirModalOpen(true);
-  }
+        const faturaSelecionada = faturas.find(fatura => fatura.id === selectedFaturaId);
+        setFaturaParaExcluir(faturaSelecionada);
+        setIsExcluirModalOpen(true);
+    }
   };
 
   const handleAdicionarFatura = async (dados) => {
