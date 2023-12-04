@@ -3,94 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import '../Estilos/Styles.css';
-
-// Componente para o modal de Cadastrar
-const CadastrarModal = ({ onClose, onAdicionar }) => {
-  const [nome, setNome] = useState('');
-  const [valor, setValor] = useState('');
-
-  const handleAdicionar = () => {
-    onAdicionar({ nome, valor }); 
-    onClose();
-  };
-
-  //modal - tela de cadastro
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Cadastrar Receita</h2>
-        <div className="modal-nome">
-          <label>Nome: </label>
-          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
-        </div>
-        <div className='modal-valor'>
-          <label>Valor: </label>
-          <input type="text" value={valor} onChange={(e) => setValor(e.target.value)} />
-        </div>
-        <div className='modal-button'>
-          <button className='add-button-model' onClick={handleAdicionar}>Adicionar Receita</button>
-          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Componente para o modal de Alterar
-const AlterarModal = ({ receita, onClose, onAlterar }) => {
-  const [nome, setNome] = useState(receita.nome);
-  const [valor, setValor] = useState(receita.valor);
-
-  const handleAlterar = () => {
-    onAlterar({ id: receita.id, nome, valor });
-    onClose();
-  };
-
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Alterar Receita</h2>
-        <div className="modal-nome">
-          <label>Nome: </label>
-          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
-        </div>
-        <div className='modal-valor'>
-          <label>Valor: </label>
-          <input type="text" value={valor} onChange={(e) => setValor(e.target.value)} />
-        </div>
-        <div className='modal-button'>
-          <button className='add-button-model' onClick={handleAlterar}>Salvar Alterações</button>
-          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Componente para o modal de Excluir
-const ExcluirModal = ({ receita, onClose, onExcluir }) => {
-  const handleConfirmarExcluir = () => {
-    onExcluir(receita);
-    onClose();
-  };
-
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Confirmar Exclusão</h2>
-        <p>Deseja realmente excluir a receita "{receita.nome}"?</p>
-        <div className="modal-button">
-          <button className="add-button-model" onClick={handleConfirmarExcluir}>
-            Confirmar
-          </button>
-          <button className="cancelar-button-model" onClick={onClose}>
-            Cancelar
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+import CadastrarReceitaModal from './CadastrarReceitaModal.jsx';
+import AlterarReceitaModal from './AlterarReceitaModal.jsx';
+import ExcluirReceitaModal from './ExcluirReceitaModal.jsx';
 
 // Componente para o Dashboard principal
 const DashboardReceita = () => {
@@ -176,7 +91,6 @@ const DashboardReceita = () => {
       });
   };
 
-  // Adicione a função para lidar com a exclusão da receita
   const handleExcluirReceita = (receita) => {
     axios.delete(`http://localhost:8080/receitas/${receita.id}`)
       .then(() => {
@@ -256,17 +170,17 @@ const DashboardReceita = () => {
         </table>
       </div>
       {isCadastrarModalOpen && (
-        <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarReceita} />
+        <CadastrarReceitaModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarReceita} />
       )}
       {isAlterarModalOpen && selectedReceita && (
-        <AlterarModal
+        <AlterarReceitaModal
           receita={selectedReceita}
           onClose={() => setIsAlterarModalOpen(false)}
           onAlterar={handleAlterarReceita}
         />
       )}
       {isExcluirModalOpen && receitaParaExcluir && (
-        <ExcluirModal
+        <ExcluirReceitaModal
           receita={receitaParaExcluir}
           onClose={() => setIsExcluirModalOpen(false)}
           onExcluir={handleExcluirReceita}
