@@ -67,4 +67,20 @@ public class GastoServico {
 
         return gastoRepositorio.findByCategoria(categoria);
     }
+
+    public GastoModelo alterarGasto(long gastoId, String novaDescricao, double novoValor, long novaCategoriaId, long novaFaturaId) {
+        GastoModelo gasto = gastoRepositorio.findById(gastoId).orElseThrow(() -> new RuntimeException("Gasto não encontrado"));
+        CategoriaModelo novaCategoria = categoriaRepositorio.findById(novaCategoriaId).orElseThrow(() -> new RuntimeException("Nova categoria não encontrada"));
+        FaturaModelo novaFatura = faturaRepositorio.findById(novaFaturaId).orElseThrow(() -> new RuntimeException("Nova fatura não encontrada"));
+    
+        // Atualizar os detalhes do gasto
+        gasto.setDescricao(novaDescricao);
+        gasto.setValor(novoValor);
+        gasto.setCategoria(novaCategoria);
+        gasto.setFatura(novaFatura);
+    
+        // Salvar as alterações
+        return gastoRepositorio.save(gasto);
+    }
+
 }
