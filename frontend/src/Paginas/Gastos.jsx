@@ -1,35 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import SelectCategoria from '../Paginas/SelectCategoria';
+import SelectFatura from '../Paginas/SelectFatura';
+
 import axios from 'axios';
 import '../Estilos/Styles.css';
 
-// Componente para o modal de Cadastro
 const CadastrarModal = ({ onClose, onAdicionar }) => {
-  const [nome, setNome] = useState('');
+  
+  const [descricao, setDescricao] = useState('');
+  const [valor, setValor] = useState('');
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState('');
+  const [faturaSelecionada, setFaturaSelecionada] = useState('');
 
-  const handleAdicionar = () => {
-    onAdicionar({ nome}); //id e contador é automatico, valor é associado com os gastos e inicia com 0 (eu acho)
+  const handleCategoriaChange = (categoriaId) => {
+    setCategoriaSelecionada(categoriaId);
+  };
+
+  const handleFaturaChange = (faturaId) => {
+    setFaturaSelecionada(faturaId);
+  };
+
+  const handleAdicionarGasto = () => {
+    onAdicionar({ descricao, valor, categoria: {id: categoriaSelecionada}, fatura: {id: faturaSelecionada}});
     onClose();
   };
 
-  //modal - tela de cadastro
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Cadastrar Fatura</h2>
-        <div className="modal-nome">
-          <label>Nome: </label>
-          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
+        <h2>Cadastrar Gasto</h2>
+        <div className="modal-descricao">
+          <label>Descrição: </label>
+          <input type="text" value={descricao} onChange={(e) => setDescricao(e.target.value)} />
         </div>
+        <div className='modal-valor'>
+          <label>Valor: </label>
+          <input type="text" value={valor} onChange={(e) => setValor(e.target.value)} />
+        </div>
+        <SelectCategoria onCategoriaChange={handleCategoriaChange} />
+        <SelectFatura onFaturaChange={handleFaturaChange} />
         <div className='modal-button'>
-          <button className = 'add-button-model' onClick={handleAdicionar}>Adicionar Fatura</button>
+          <button className='add-button-model' onClick={handleAdicionarGasto}>Adicionar Gasto</button>
           <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
         </div>
       </div>
     </div>
   );
 };
+
+
 
 // Componente para o Dashboard principal
 const DashboardGasto = () => {
@@ -77,9 +97,17 @@ const DashboardGasto = () => {
     }
   };
 
-  const handleAdicionarGasto = (dados) => {
-    // Adicionar lógica para add fatura no banco de dados
-    // Fazer integraçao
+  const handleAdicionarGasto = async (dados) => {
+    try {
+      // Adicionar lógica para adicionar gasto no banco de dados
+      // Usando axios para fazer a requisição POST
+      await axios.post('http://localhost:8080/gastos/cadastrar', dados);
+      // Atualizar a lista de gastos após o cadastro
+      const response = await axios.get('http://localhost:8080/gastos/listar');
+      setGastos(response.data);
+    } catch (error) {
+      console.error('Erro ao adicionar gasto:', error);
+    }
   };
 
   return (
@@ -128,7 +156,6 @@ const DashboardGasto = () => {
               <th></th>
               <th>Descricao</th>
               <th>Valor</th>
-              <th>Categoria</th>
             </tr>
           </thead>
           <tbody>
@@ -144,7 +171,6 @@ const DashboardGasto = () => {
                   </td>
                   <td>{gasto.descricao}</td>
                   <td>{gasto.valor}</td>
-                  <td>{gasto.categoria.nome}</td>
                 </tr>
               ))
             }
