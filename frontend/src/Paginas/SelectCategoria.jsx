@@ -7,7 +7,7 @@ const SelectCategoria = () => {
   
     useEffect(() => {
       // Faz uma chamada de API para buscar a lista de categorias do backend
-      fetch('http://seu-backend/api/categorias')
+      fetch('http://localhost:8080/categoria/listar')
         .then((response) => response.json())
         .then((data) => setCategorias(data))
         .catch((error) => console.error('Erro ao buscar categorias:', error));

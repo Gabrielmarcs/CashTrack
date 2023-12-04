@@ -39,17 +39,16 @@ const DashboardGasto = () => {
   const [selectedGastoId, setSelectedGastoId] = useState(null);
 
   useEffect(() => {
-    // Função para buscar as faturas do backend ao carregar a página
+    // Função para buscar os gastos do backend ao carregar a página
     const fetchGastos = async () => {
       try {
-        const response = await fetch('http://localhost:8080/gastos/listar');
-        const data = await response.json();
-        setGastos(data);
+        const response = await axios.get('http://localhost:8080/gastos/listar');
+        setGastos(response.data);
       } catch (error) {
         console.error('Erro ao buscar os gastos:', error);
       }
     };
-
+  
     fetchGastos();
   }, []);
 
@@ -129,6 +128,7 @@ const DashboardGasto = () => {
               <th></th>
               <th>Descricao</th>
               <th>Valor</th>
+              <th>Categoria</th>
             </tr>
           </thead>
           <tbody>
@@ -144,6 +144,7 @@ const DashboardGasto = () => {
                   </td>
                   <td>{gasto.descricao}</td>
                   <td>{gasto.valor}</td>
+                  <td>{gasto.categoria.nome}</td>
                 </tr>
               ))
             }
