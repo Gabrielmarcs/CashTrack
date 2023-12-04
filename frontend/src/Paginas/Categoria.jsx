@@ -35,10 +35,42 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
   );
 };
 
+// Componente para o modal de Alterar
+const AlterarModal = ({ categoria, onClose, onAlterar }) => {
+  const [nome, setNome] = useState(categoria.nome);
+  const [descricao, setDescricao] = useState(categoria.descricao);
+  const handleAlterar = () => {
+    onAlterar({ id: categoria.id, nome, descricao });
+    onClose();
+  };
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Alterar Fatura</h2>
+        <div className="modal-nome">
+          <label>Nome: </label>
+          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
+        </div>
+        <div className="modal-descricao">
+          <label>Descrição: </label>
+          <input type="text" value={descricao} onChange={(e) => setDescricao(e.target.value)} />  
+        </div>
+        <div className='modal-button'>
+          <button className='add-button-model' onClick={handleAlterar}>Salvar Alterações</button>
+          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Componente para o Dashboard principal
 const DashboardCategoria = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
+  const [isAlterarModalOpen, setIsAlterarModalOpen] = useState(false);
+  const [selectedCategoria, setSelectedCategoria] = useState(null);
   const [selectedCategoriaId, setSelectedCategoriaId] = useState(null);
   const [categorias, setCategorias] = useState([]);
 
@@ -73,10 +105,13 @@ const DashboardCategoria = () => {
   const handleActionButtonClick = (action) => {
     if (action === 'Cadastrar') {
       setIsCadastrarModalOpen(true);
+    } else if (action === 'Alterar' && selectedCategoriaId !== null){
+      // Abre o modal de alteração para a fatura selecionada
+      const categoriaSelecionada = categorias.find(categoria => categoria.id === selectedCategoriaId);
+      setSelectedCategoria(categoriaSelecionada);
+      setIsAlterarModalOpen(true);
     }
-    else {
-      // Adiciona lógica para os outros botões
-    }
+    
   };
 
   const handleAdicionarCategoria = async (dados) => {
@@ -103,6 +138,22 @@ const DashboardCategoria = () => {
       console.error('Erro ao cadastrar a categoria:', error);
       // Adicione aqui a lógica para lidar com o erro, se necessário
     }
+  };
+
+  const handleAlterarCategoria = (dados) => {
+    axios.put(`http://localhost:8080/categoria/alterar`, dados)
+      .then(() => {
+        axios.get('http://localhost:8080/categoria/listar')
+          .then((response) => {
+            setCategorias(response.data);
+          })
+          .catch((erro) => {
+            console.log('Erro ao obter as categorias: ' + erro);
+          });
+      })
+      .catch((erro) => {
+        console.log('Erro ao alterar a categoria: ' + erro);
+      });
   };
 
   return (
@@ -168,6 +219,13 @@ const DashboardCategoria = () => {
       </div>
       {isCadastrarModalOpen && (
         <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarCategoria} />
+      )}
+      {isAlterarModalOpen && selectedCategoria && (
+        <AlterarModal
+          categoria={selectedCategoria}
+          onClose={() => setIsAlterarModalOpen(false)}
+          onAlterar={handleAlterarCategoria}
+        />
       )}
     </div>
   );
