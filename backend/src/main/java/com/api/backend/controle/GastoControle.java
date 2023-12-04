@@ -34,6 +34,7 @@ public class GastoControle {
                 gasto.getCategoria().getId(),
                 gasto.getFatura().getId()
             );
+            gastoServico.gravarInformacoes(gasto);
 
             return new ResponseEntity<>("Gasto cadastrado com sucesso. ID: " + gastoCriado.getId(), HttpStatus.CREATED);
         } catch (RuntimeException e) {
@@ -49,4 +50,5 @@ public class GastoControle {
             return new ResponseEntity<>("Erro ao listar os gastos: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    
 }
