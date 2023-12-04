@@ -1,10 +1,13 @@
 package com.api.backend.controle;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +51,16 @@ public class GastoControle {
             return new ResponseEntity<>(gastoServico.listar(), HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>("Erro ao listar os gastos: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/listarPorCategoria/{categoriaId}")
+    public ResponseEntity<?> listarGastosPorCategoria(@PathVariable long categoriaId) {
+        try {
+            List<GastoModelo> gastos = gastoServico.listarGastosPorCategoria(categoriaId);
+            return new ResponseEntity<>(gastos, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Erro ao listar os gastos por categoria: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
     
