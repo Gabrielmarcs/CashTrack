@@ -10,4 +10,10 @@ import lombok.Setter;
 @Setter
 public class RespostaModelo {
     private String mensagem;
+
+    public RespostaModelo(String mensagem) {
+        this.mensagem = mensagem;
+    }
+        public RespostaModelo() {
+    }
 }

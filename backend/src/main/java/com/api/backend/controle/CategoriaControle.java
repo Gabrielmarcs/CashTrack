@@ -1,6 +1,8 @@
 package com.api.backend.controle;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +28,11 @@ public class CategoriaControle {
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<RespostaModelo> removerCategoria(@PathVariable long id){
-        return cs.removerCategoria(id);
+        try {
+            return cs.removerCategoria(id);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.badRequest().body(new RespostaModelo("Há gastos associados a essa categoria"));
+        } 
     }
 
     @PutMapping("/alterar")

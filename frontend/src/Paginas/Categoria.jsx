@@ -65,13 +65,40 @@ const AlterarModal = ({ categoria, onClose, onAlterar }) => {
   );
 };
 
+// Componente para o modal de Excluir
+const ExcluirModal = ({ categoria, onClose, onExcluir }) => {
+  const handleConfirmarExcluir = () => {
+    onExcluir(categoria);
+    onClose();
+  };
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Confirmar Exclusão</h2>
+        <p>Deseja realmente excluir a categoria "{categoria.nome}"?</p>
+        <div className="modal-button">
+          <button className="add-button-model" onClick={handleConfirmarExcluir}>
+            Confirmar
+          </button>
+          <button className="cancelar-button-model" onClick={onClose}>
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 // Componente para o Dashboard principal
 const DashboardCategoria = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
   const [isAlterarModalOpen, setIsAlterarModalOpen] = useState(false);
+  const [isExcluirModalOpen, setIsExcluirModalOpen] = useState(false);
   const [selectedCategoria, setSelectedCategoria] = useState(null);
   const [selectedCategoriaId, setSelectedCategoriaId] = useState(null);
+  const [categoriaParaExcluir, setCategoriaParaExcluir] = useState(null);
   const [categorias, setCategorias] = useState([]);
 
   useEffect(() => {
@@ -110,7 +137,11 @@ const DashboardCategoria = () => {
       const categoriaSelecionada = categorias.find(categoria => categoria.id === selectedCategoriaId);
       setSelectedCategoria(categoriaSelecionada);
       setIsAlterarModalOpen(true);
-    }
+    } else if (action === 'Excluir' && selectedCategoriaId !== null){
+      const categoriaSelecionada = categorias.find(categoria => categoria.id === selectedCategoriaId);
+      setCategoriaParaExcluir(categoriaSelecionada);
+      setIsExcluirModalOpen(true);
+  }
     
   };
 
@@ -156,6 +187,22 @@ const DashboardCategoria = () => {
       });
   };
 
+  const handleExcluirCategoria = (categoria) => {
+    axios.delete(`http://localhost:8080/categoria/deletar/${categoria.id}`)
+      .then(() => {
+        axios.get('http://localhost:8080/categoria/listar')
+          .then((response) => {
+            setCategorias(response.data);
+          })
+          .catch((erro) => {
+            console.log('Erro ao obter as categorias: ' + erro);
+          });
+      })
+      .catch((erro) => {
+        console.log('Erro ao excluir a categoria: ' + erro);
+      });
+  };
+  
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
@@ -227,6 +274,13 @@ const DashboardCategoria = () => {
           onAlterar={handleAlterarCategoria}
         />
       )}
+      {isExcluirModalOpen && categoriaParaExcluir && (
+        <ExcluirModal
+          categoria={categoriaParaExcluir}
+          onClose={() => setIsExcluirModalOpen(false)}
+          onExcluir={handleExcluirCategoria}
+        />
+    )}
     </div>
   );
 };
