@@ -21,4 +21,5 @@ public class FaturaModelo {
     private long id;
     private String nome;
     private double valorTotal;
+    private String dataVencimento;
 }

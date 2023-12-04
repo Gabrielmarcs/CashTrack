@@ -34,17 +34,12 @@ public class GastoServico {
         CategoriaModelo categoria = gasto.getCategoria();
 
         double valorAtualFatura = fatura.getValorTotal();
-        int qtdeGastosCategoria = categoria.getQtdeGastos();
 
         double novoValorFatura = valorAtualFatura + gasto.getValor();
 
         fatura.setValorTotal(novoValorFatura);
         
         faturaRepositorio.save(fatura);
-
-        int novaQtdeGastosCategoria = qtdeGastosCategoria + 1;
-
-        categoria.setQtdeGastos(novaQtdeGastosCategoria);
         categoriaRepositorio.save(categoria);
     }
 

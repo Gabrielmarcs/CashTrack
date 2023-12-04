@@ -20,5 +20,4 @@ public class CategoriaModelo {
     private long id;
     private String nome;
     private String descricao;
-    private int qtdeGastos = 0;
 }

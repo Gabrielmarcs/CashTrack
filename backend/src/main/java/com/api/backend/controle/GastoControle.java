@@ -63,5 +63,7 @@ public class GastoControle {
             return new ResponseEntity<>("Erro ao listar os gastos por categoria: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    
     
 }
