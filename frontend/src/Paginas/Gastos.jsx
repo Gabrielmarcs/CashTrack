@@ -49,7 +49,34 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
   );
 };
 
-
+const DetalhesModal = ({ gasto, onClose }) => {
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Detalhes do Gasto</h2>
+        <div className="modal-descricao">
+          <label>Descrição: </label>
+          <span>{gasto.descricao}</span>
+        </div>
+        <div className="modal-valor">
+          <label>Valor: </label>
+          <span>{gasto.valor}</span>
+        </div>
+        <div className="modal-fatura">
+          <label>Fatura: </label>
+          <span>{gasto.fatura.nome}</span>
+        </div>
+        <div className="modal-categoria">
+          <label>Categoria: </label>
+          <span>{gasto.categoria.nome}</span>
+        </div>
+        <button className="cancelar-button-model" onClick={onClose}>
+          Fechar
+        </button>
+      </div>
+    </div>
+  );
+};
 
 // Componente para o Dashboard principal
 const DashboardGasto = () => {
@@ -57,6 +84,8 @@ const DashboardGasto = () => {
   const [gastos, setGastos] = useState([]);
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
   const [selectedGastoId, setSelectedGastoId] = useState(null);
+  const [isDetalhesModalOpen, setIsDetalhesModalOpen] = useState(false);
+  const selectedGasto = gastos.find((gasto) => gasto.id === selectedGastoId);
 
   useEffect(() => {
     // Função para buscar os gastos do backend ao carregar a página
@@ -91,8 +120,9 @@ const DashboardGasto = () => {
     if (action === 'Cadastrar') {
       // Abre o modal de cadastro
       setIsCadastrarModalOpen(true);
-    }
-    else {
+    } else if (action === 'Detalhes' && selectedGastoId) {
+      setIsDetalhesModalOpen(true);
+    } else {
       // Adiciona lógica para os outros botões
     }
   };
@@ -180,6 +210,9 @@ const DashboardGasto = () => {
       </div>
       {isCadastrarModalOpen && (
         <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarGasto} />
+      )}
+      {isDetalhesModalOpen && selectedGasto && (
+        <DetalhesModal gasto={selectedGasto} onClose={() => setIsDetalhesModalOpen(false)} />
       )}
     </div>
   );
