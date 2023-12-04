@@ -30,17 +30,10 @@ public class GastoServico {
     }
 
     public void gravarInformacoes(GastoModelo gasto) {
-        FaturaModelo fatura = gasto.getFatura();
-        CategoriaModelo categoria = gasto.getCategoria();
-
-        double valorAtualFatura = fatura.getValorTotal();
-
-        double novoValorFatura = valorAtualFatura + gasto.getValor();
-
-        fatura.setValorTotal(novoValorFatura);
-        
-        faturaRepositorio.save(fatura);
-        categoriaRepositorio.save(categoria);
+         FaturaModelo fatura = gasto.getFatura();
+         CategoriaModelo categoria = gasto.getCategoria();
+         faturaRepositorio.save(fatura);
+         categoriaRepositorio.save(categoria);
     }
 
     public GastoModelo cadastrar(String descricao, double valor, long categoriaId, long faturaId) {

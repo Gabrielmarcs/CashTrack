@@ -6,9 +6,10 @@ import '../Estilos/Styles.css';
 // Componente para o modal de Cadastro
 const CadastrarModal = ({ onClose, onAdicionar }) => {
   const [nome, setNome] = useState('');
+  const [dataVencimento, setDataVencimento] = useState('');
 
   const handleAdicionar = () => {
-    onAdicionar({ nome}); 
+    onAdicionar({ nome, dataVencimento}); 
     onClose();
   };
 
@@ -20,6 +21,10 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
         <div className="modal-nome">
           <label>Nome: </label>
           <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
+        </div>
+        <div className="modal-data">
+        <label>Data de Vencimento(dd/mm/aaaa): </label>
+          <input type="text" value={dataVencimento} onChange={(e) => setDataVencimento(e.target.value)} />  
         </div>
         <div className='modal-button'>
           <button className = 'add-button-model' onClick={handleAdicionar}>Adicionar Fatura</button>
@@ -33,9 +38,10 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 // Componente para o modal de Alterar
 const AlterarModal = ({ fatura, onClose, onAlterar }) => {
   const [nome, setNome] = useState(fatura.nome);
+  const [dataVencimento, setDataVencimento] = useState(fatura.dataVencimento);
 
   const handleAlterar = () => {
-    onAlterar({ id: fatura.id, nome});
+    onAlterar({ id: fatura.id, nome, dataVencimento});
     onClose();
   };
 
@@ -46,6 +52,10 @@ const AlterarModal = ({ fatura, onClose, onAlterar }) => {
         <div className="modal-nome">
           <label>Nome: </label>
           <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
+        </div>
+        <div className="modal-data">
+          <label>Data de Vencimento(dd/mm/aaaa): </label>
+          <input type="text" value={dataVencimento} onChange={(e) => setDataVencimento(e.target.value)} />  
         </div>
         <div className='modal-button'>
           <button className='add-button-model' onClick={handleAlterar}>Salvar Alterações</button>
@@ -234,7 +244,7 @@ const DashboardFatura = () => {
             <tr>
               <th></th>
               <th>Nome</th>
-              <th>Valor total</th>
+              <th>Data de Vencimento</th>
             </tr>
           </thead>
           <tbody>
@@ -247,7 +257,7 @@ const DashboardFatura = () => {
                    />
                 </td>
                 <td>{fatura.nome}</td>
-                <td>{"R$" + fatura.valorTotal}</td>
+                <td>{fatura.dataVencimento}</td>
               </tr>
             ))}
 

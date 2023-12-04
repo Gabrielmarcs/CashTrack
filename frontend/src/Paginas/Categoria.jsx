@@ -243,7 +243,6 @@ const DashboardCategoria = () => {
               <th></th>
               <th>Nome</th>
               <th>Descricao</th>
-              <th>nº de gastos associados </th>
             </tr>
           </thead>
           <tbody>
@@ -257,7 +256,6 @@ const DashboardCategoria = () => {
                 </td>
                 <td>{categoria.nome}</td>
                 <td>{categoria.descricao}</td>
-                <td>{categoria.qtdeGastos}</td>
               </tr>
             ))}
           </tbody>

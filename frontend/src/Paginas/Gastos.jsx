@@ -78,6 +78,86 @@ const DetalhesModal = ({ gasto, onClose }) => {
   );
 };
 
+// Componente para o modal de Excluir
+const ExcluirModal = ({ gasto, onClose, onExcluir }) => {
+  const handleConfirmarExcluir = () => {
+    onExcluir(gasto);
+    onClose();
+  };
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Confirmar Exclusão</h2>
+        <p>Deseja realmente excluir o gasto "{gasto.descricao}"?</p>
+        <div className="modal-button">
+          <button className="add-button-model" onClick={handleConfirmarExcluir}>
+            Confirmar
+          </button>
+          <button className="cancelar-button-model" onClick={onClose}>
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AlterarModal = ({ gasto, onClose, onAlterar }) => {
+  const [novaDescricao, setNovaDescricao] = useState(gasto.descricao);
+  const [novoValor, setNovoValor] = useState(gasto.valor);
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState(gasto.categoria.id);
+  const [faturaSelecionada, setFaturaSelecionada] = useState(gasto.fatura.id);
+  
+
+  const handleCategoriaChange = (categoriaId) => {
+    setCategoriaSelecionada(categoriaId);
+  };
+
+  const handleFaturaChange = (faturaId) => {
+    setFaturaSelecionada(faturaId);
+  };
+
+  const handleAlterarGasto = () => {
+    onAlterar({
+      ...gasto,
+      descricao: novaDescricao,
+      valor: novoValor,
+      categoria: { id: categoriaSelecionada },
+      fatura: { id: faturaSelecionada },
+    });
+    onClose();
+  };
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Alterar Gasto</h2>
+        <div className="modal-descricao">
+          <label>Descrição: </label>
+          <input type="text" value={novaDescricao} onChange={(e) => setNovaDescricao(e.target.value)} />
+        </div>
+        <div className='modal-valor'>
+          <label>Valor: </label>
+          <input type="text" value={novoValor} onChange={(e) => setNovoValor(e.target.value)} />
+        </div>
+        <SelectCategoria
+          categoriaSelecionada={categoriaSelecionada}
+          onCategoriaChange={handleCategoriaChange}
+        />
+        <SelectFatura
+          faturaSelecionada={faturaSelecionada}
+          onFaturaChange={handleFaturaChange}
+        />
+        <div className='modal-button'>
+          <button className='add-button-model' onClick={handleAlterarGasto}>Alterar Gasto</button>
+          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Componente para o Dashboard principal
 const DashboardGasto = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
@@ -85,13 +165,22 @@ const DashboardGasto = () => {
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
   const [selectedGastoId, setSelectedGastoId] = useState(null);
   const [isDetalhesModalOpen, setIsDetalhesModalOpen] = useState(false);
-  const selectedGasto = gastos.find((gasto) => gasto.id === selectedGastoId);
+  const [isExcluirModalOpen, setIsExcluirModalOpen] = useState(false);
+  const [gastoParaExcluir, setGastoParaExcluir] = useState(null);
+  const [categoriaSelecionadaId, setCategoriaSelecionadaId] = useState(null); //adicionei agr
+  const [isAlterarModalOpen, setIsAlterarModalOpen] = useState(false);
+  const [selectedGasto, setSelectedGasto] = useState(null);
+
+
 
   useEffect(() => {
-    // Função para buscar os gastos do backend ao carregar a página
     const fetchGastos = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/gastos/listar');
+        let url = 'http://localhost:8080/gastos/listar';
+        if (categoriaSelecionadaId) {
+          url = `http://localhost:8080/gastos/listarPorCategoria/${categoriaSelecionadaId}`;
+        }
+        const response = await axios.get(url);
         setGastos(response.data);
       } catch (error) {
         console.error('Erro ao buscar os gastos:', error);
@@ -99,8 +188,8 @@ const DashboardGasto = () => {
     };
   
     fetchGastos();
-  }, []);
-
+  }, [categoriaSelecionadaId]);
+  
 
   const handleMenuClick = (menuItem) => {
     if (menuItem === 'Receitas') {
@@ -120,10 +209,17 @@ const DashboardGasto = () => {
     if (action === 'Cadastrar') {
       // Abre o modal de cadastro
       setIsCadastrarModalOpen(true);
-    } else if (action === 'Detalhes' && selectedGastoId) {
+    }else if (action === 'Alterar' && selectedGastoId !== null){
+      // Abre o modal de alteração para a gasto selecionada
+      const gastoSelecionado = gastos.find(gasto => gasto.id === selectedGastoId);
+      setSelectedGasto(gastoSelecionado);
+      setIsAlterarModalOpen(true);
+    }else if (action === 'Detalhes' && selectedGastoId !== null) {
       setIsDetalhesModalOpen(true);
-    } else {
-      // Adiciona lógica para os outros botões
+    }else if (action === 'Excluir' && selectedGastoId !== null){
+      const gastoSelecionado = gastos.find(gasto => gasto.id === selectedGastoId);
+      setGastoParaExcluir(gastoSelecionado);
+      setIsExcluirModalOpen(true);
     }
   };
 
@@ -138,6 +234,33 @@ const DashboardGasto = () => {
     } catch (error) {
       console.error('Erro ao adicionar gasto:', error);
     }
+  };
+
+  const handleAlterarGasto = async (dados) => {
+    try{
+      await axios.put(`http://localhost:8080/gastos/alterar`, dados);
+      // Atualizar a lista de gastos após o cadastro
+      const response = await axios.get('http://localhost:8080/gastos/listar');
+    setGastos(response.data);
+    } catch (error) {
+      console.error('Erro ao adicionar gasto:', error);
+    }
+  };
+
+  const handleExcluirGasto = (gasto) => {
+    axios.delete(`http://localhost:8080/gastos/excluir/${gasto.id}`)
+      .then(() => {
+        axios.get('http://localhost:8080/gastos/listar')
+          .then((response) => {
+            setGastos(response.data);
+          })
+          .catch((erro) => {
+            console.log('Erro ao obter os gastos: ' + erro);
+          });
+      })
+      .catch((erro) => {
+        console.log('Erro ao excluir o gasto: ' + erro);
+      });
   };
 
   return (
@@ -160,7 +283,8 @@ const DashboardGasto = () => {
           </button>
         </div>
       </header>
-      <SelectCategoria />
+      
+      <SelectCategoria onCategoriaChange={(categoriaId) => setCategoriaSelecionadaId(categoriaId)} />
 
       <div className="dashboard-content">
         <div className="dashboard-menu">
@@ -211,9 +335,23 @@ const DashboardGasto = () => {
       {isCadastrarModalOpen && (
         <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarGasto} />
       )}
+      {isAlterarModalOpen && selectedGasto && (
+        <AlterarModal
+          gasto={selectedGasto}
+          onClose={() => setIsAlterarModalOpen(false)}
+          onAlterar={handleAlterarGasto}
+        />
+      )}
       {isDetalhesModalOpen && selectedGasto && (
         <DetalhesModal gasto={selectedGasto} onClose={() => setIsDetalhesModalOpen(false)} />
       )}
+      {isExcluirModalOpen && gastoParaExcluir && (
+        <ExcluirModal
+          gasto={gastoParaExcluir}
+          onClose={() => setIsExcluirModalOpen(false)}
+          onExcluir={handleExcluirGasto}
+        />
+    )}
     </div>
   );
 };

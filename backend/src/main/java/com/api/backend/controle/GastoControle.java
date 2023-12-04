@@ -38,7 +38,6 @@ public class GastoControle {
                     gasto.getValor(),
                     gasto.getCategoria().getId(),
                     gasto.getFatura().getId());
-            gastoServico.gravarInformacoes(gasto);
 
             return new ResponseEntity<>("Gasto cadastrado com sucesso. ID: " + gastoCriado.getId(), HttpStatus.CREATED);
         } catch (RuntimeException e) {

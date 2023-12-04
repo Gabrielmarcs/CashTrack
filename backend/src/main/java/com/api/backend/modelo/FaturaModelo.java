@@ -20,6 +20,5 @@ public class FaturaModelo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
-    private double valorTotal;
     private String dataVencimento;
 }
