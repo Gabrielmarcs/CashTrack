@@ -18,7 +18,7 @@ function App() {
         <Route path="/dashboard/faturas" element={<DashboardFatura />} />
         <Route path="/dashboard/categorias" element={<DashboardCategoria />} />
         {/* Adicione outras rotas para os componentes de dashboard, se necessário */}
-        <Route path="/" element={<Navigate to="/cadastro" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
         {/* Rota raiz redireciona para /cadastro */}
       </Routes>
     </Router>

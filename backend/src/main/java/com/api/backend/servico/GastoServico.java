@@ -82,7 +82,4 @@ public class GastoServico {
 
         gastoRepositorio.delete(gasto);
     }
-
-    
-
 }

@@ -51,7 +51,7 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 
 const DetalhesModal = ({ gasto, onClose }) => {
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay" key={gasto.id}>
       <div className="modal-content">
         <h2>Detalhes do Gasto</h2>
         <div className="modal-descricao">
@@ -170,7 +170,7 @@ const DashboardGasto = () => {
   const [categoriaSelecionadaId, setCategoriaSelecionadaId] = useState(null); //adicionei agr
   const [isAlterarModalOpen, setIsAlterarModalOpen] = useState(false);
   const [selectedGasto, setSelectedGasto] = useState(null);
-
+  const [shouldRefreshDetails, setShouldRefreshDetails] = useState(false); 
 
 
   useEffect(() => {
@@ -237,13 +237,15 @@ const DashboardGasto = () => {
   };
 
   const handleAlterarGasto = async (dados) => {
-    try{
-      await axios.put(`http://localhost:8080/gastos/alterar`, dados);
-      // Atualizar a lista de gastos após o cadastro
+    try {
+      await axios.put(`http://localhost:8080/gastos/alterar/${dados.id}`, dados);
       const response = await axios.get('http://localhost:8080/gastos/listar');
-    setGastos(response.data);
+      setGastos(response.data);
+
+      setShouldRefreshDetails(true);
+
     } catch (error) {
-      console.error('Erro ao adicionar gasto:', error);
+      console.error('Erro ao alterar gasto:', error);
     }
   };
 
