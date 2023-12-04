@@ -2,93 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../Estilos/Styles.css';
 import axios from 'axios';
-
-// Componente para o modal de Cadastro
-const CadastrarModal = ({ onClose, onAdicionar }) => {
-  const [nome, setNome] = useState('');
-  const [descricao, setDescricao] = useState('');
-
-  const handleAdicionar = () => {
-    onAdicionar({ nome, descricao}); 
-    onClose();
-  };
-
-  //modal - tela de cadastro
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Cadastrar Categoria</h2>
-        <div className="modal-nome">
-          <label>Nome: </label>
-          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
-        </div>
-        <div className="modal-descricao">
-          <label>Descricao: </label>
-          <input type="text" value={descricao} onChange={(e) => setDescricao(e.target.value)} />  
-        </div>
-        <div className='modal-button'>
-          <button className = 'add-button-model' onClick={handleAdicionar}>Adicionar Categoria</button>
-          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Componente para o modal de Alterar
-const AlterarModal = ({ categoria, onClose, onAlterar }) => {
-  const [nome, setNome] = useState(categoria.nome);
-  const [descricao, setDescricao] = useState(categoria.descricao);
-  const handleAlterar = () => {
-    onAlterar({ id: categoria.id, nome, descricao });
-    onClose();
-  };
-
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Alterar Fatura</h2>
-        <div className="modal-nome">
-          <label>Nome: </label>
-          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
-        </div>
-        <div className="modal-descricao">
-          <label>Descrição: </label>
-          <input type="text" value={descricao} onChange={(e) => setDescricao(e.target.value)} />  
-        </div>
-        <div className='modal-button'>
-          <button className='add-button-model' onClick={handleAlterar}>Salvar Alterações</button>
-          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Componente para o modal de Excluir
-const ExcluirModal = ({ categoria, onClose, onExcluir }) => {
-  const handleConfirmarExcluir = () => {
-    onExcluir(categoria);
-    onClose();
-  };
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Confirmar Exclusão</h2>
-        <p>Deseja realmente excluir a categoria "{categoria.nome}"?</p>
-        <div className="modal-button">
-          <button className="add-button-model" onClick={handleConfirmarExcluir}>
-            Confirmar
-          </button>
-          <button className="cancelar-button-model" onClick={onClose}>
-            Cancelar
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
+import CadastrarCategoriaModal from './CadastrarCategoriaModal.jsx';
+import AlterarCategoriaModal from './AlterarCategoriaModal.jsx';
+import ExcluirCategoriaModal from './ExcluirCategoriaModal.jsx';
 
 // Componente para o Dashboard principal
 const DashboardCategoria = () => {
@@ -263,17 +179,17 @@ const DashboardCategoria = () => {
         </table>
       </div>
       {isCadastrarModalOpen && (
-        <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarCategoria} />
+        <CadastrarCategoriaModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarCategoria} />
       )}
       {isAlterarModalOpen && selectedCategoria && (
-        <AlterarModal
+        <AlterarCategoriaModal
           categoria={selectedCategoria}
           onClose={() => setIsAlterarModalOpen(false)}
           onAlterar={handleAlterarCategoria}
         />
       )}
       {isExcluirModalOpen && categoriaParaExcluir && (
-        <ExcluirModal
+        <ExcluirCategoriaModal
           categoria={categoriaParaExcluir}
           onClose={() => setIsExcluirModalOpen(false)}
           onExcluir={handleExcluirCategoria}

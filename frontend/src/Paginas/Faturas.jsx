@@ -2,94 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import '../Estilos/Styles.css';
-
-// Componente para o modal de Cadastro
-const CadastrarModal = ({ onClose, onAdicionar }) => {
-  const [nome, setNome] = useState('');
-  const [dataVencimento, setDataVencimento] = useState('');
-
-  const handleAdicionar = () => {
-    onAdicionar({ nome, dataVencimento}); 
-    onClose();
-  };
-
-  //modal - tela de cadastro
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Cadastrar Fatura</h2>
-        <div className="modal-nome">
-          <label>Nome: </label>
-          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
-        </div>
-        <div className="modal-data">
-        <label>Data de Vencimento(dd/mm/aaaa): </label>
-          <input type="text" value={dataVencimento} onChange={(e) => setDataVencimento(e.target.value)} />  
-        </div>
-        <div className='modal-button'>
-          <button className = 'add-button-model' onClick={handleAdicionar}>Adicionar Fatura</button>
-          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Componente para o modal de Alterar
-const AlterarModal = ({ fatura, onClose, onAlterar }) => {
-  const [nome, setNome] = useState(fatura.nome);
-  const [dataVencimento, setDataVencimento] = useState(fatura.dataVencimento);
-
-  const handleAlterar = () => {
-    onAlterar({ id: fatura.id, nome, dataVencimento});
-    onClose();
-  };
-
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Alterar Fatura</h2>
-        <div className="modal-nome">
-          <label>Nome: </label>
-          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
-        </div>
-        <div className="modal-data">
-          <label>Data de Vencimento(dd/mm/aaaa): </label>
-          <input type="text" value={dataVencimento} onChange={(e) => setDataVencimento(e.target.value)} />  
-        </div>
-        <div className='modal-button'>
-          <button className='add-button-model' onClick={handleAlterar}>Salvar Alterações</button>
-          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Componente para o modal de Excluir
-const ExcluirModal = ({ fatura, onClose, onExcluir }) => {
-  const handleConfirmarExcluir = () => {
-    onExcluir(fatura);
-    onClose();
-  };
-
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Confirmar Exclusão</h2>
-        <p>Deseja realmente excluir a fatura "{fatura.nome}"?</p>
-        <div className="modal-button">
-          <button className="add-button-model" onClick={handleConfirmarExcluir}>
-            Confirmar
-          </button>
-          <button className="cancelar-button-model" onClick={onClose}>
-            Cancelar
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+import CadastrarFaturaModal from './CadastrarFaturaModal.jsx';
+import AlterarFaturaModal from './AlterarFaturaModal.jsx';
+import ExcluirFaturaModal from './ExcluirFaturaModal.jsx';
 
 // Componente para o Dashboard principal
 const DashboardFatura = () => {
@@ -265,17 +180,17 @@ const DashboardFatura = () => {
         </table>
       </div>
       {isCadastrarModalOpen && (
-        <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarFatura} />
+        <CadastrarFaturaModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarFatura} />
       )}
       {isAlterarModalOpen && selectedFatura && (
-        <AlterarModal
+        <AlterarFaturaModal
           fatura={selectedFatura}
           onClose={() => setIsAlterarModalOpen(false)}
           onAlterar={handleAlterarFatura}
         />
       )}
       {isExcluirModalOpen && faturaParaExcluir && (
-        <ExcluirModal
+        <ExcluirFaturaModal
           fatura={faturaParaExcluir}
           onClose={() => setIsExcluirModalOpen(false)}
           onExcluir={handleExcluirFatura}

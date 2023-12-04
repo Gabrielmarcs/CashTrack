@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import '../Estilos/Styles.css';
+
 // Componente para o modal de Alterar
-const AlterarFaturaModal = ({ fatura, onClose, onAlterar }) => {
-    const [nome, setNome] = useState(fatura.nome);
-    const [dataVencimento, setDataVencimento] = useState(fatura.dataVencimento);
-  
+const AlterarCategoriaModal = ({ categoria, onClose, onAlterar }) => {
+    const [nome, setNome] = useState(categoria.nome);
+    const [descricao, setDescricao] = useState(categoria.descricao);
     const handleAlterar = () => {
-      onAlterar({ id: fatura.id, nome, dataVencimento});
+      onAlterar({ id: categoria.id, nome, descricao });
       onClose();
     };
   
@@ -18,9 +18,9 @@ const AlterarFaturaModal = ({ fatura, onClose, onAlterar }) => {
             <label>Nome: </label>
             <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
           </div>
-          <div className="modal-data">
-            <label>Data de Vencimento(dd/mm/aaaa): </label>
-            <input type="text" value={dataVencimento} onChange={(e) => setDataVencimento(e.target.value)} />  
+          <div className="modal-descricao">
+            <label>Descrição: </label>
+            <input type="text" value={descricao} onChange={(e) => setDescricao(e.target.value)} />  
           </div>
           <div className='modal-button'>
             <button className='add-button-model' onClick={handleAlterar}>Salvar Alterações</button>
@@ -31,4 +31,4 @@ const AlterarFaturaModal = ({ fatura, onClose, onAlterar }) => {
     );
   };
 
-  export default AlterarFaturaModal;
+export default AlterarCategoriaModal;
