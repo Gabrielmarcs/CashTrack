@@ -39,17 +39,21 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
 const DashboardCategoria = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
-  const [categorias, setCategoria] = useState([]);
+  const [selectedCategoriaId, setSelectedCategoriaId] = useState(null);
+  const [categorias, setCategorias] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/categoria') 
-    .then((response) => {
-      console.log(response.data); // Adicione esta linha para depurar
-      setCategoria(response.data);
-    })
-    .catch((erro) => {
-      console.log('Erro ao obter as categorias: ' + erro);
-    });
+    // Função para buscar as categorias do backend ao carregar a página
+    const fetchCategorias = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/categoria/listar');
+        setCategorias(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar as categorias:', error);
+      }
+    };
+
+    fetchCategorias();
   }, []);
 
   const handleMenuClick = (menuItem) => {
@@ -81,7 +85,7 @@ const DashboardCategoria = () => {
         // Atualiza a lista de categorias após adicionar com sucesso
         axios.get('http://localhost:8080/categoria')
           .then((response) => {
-            setCategoria(response.data); // Atualiza a lista de categorias
+            setCategorias(response.data); // Atualiza a lista de categorias
           })
           .catch((erro) => {
             console.log('Erro ao obter categorias:', erro);
@@ -129,6 +133,7 @@ const DashboardCategoria = () => {
         <table className="dashboard-table">
           <thead>
             <tr>
+              <th></th>
               <th>Nome</th>
               <th>Descricao</th>
               <th>nº de gastos associados </th>
@@ -136,7 +141,13 @@ const DashboardCategoria = () => {
           </thead>
           <tbody>
             {categorias.map((categoria) => (
-              <tr key={categoria.id}>
+              <tr key={categoria.id} onClick={() => setSelectedCategoriaId(categoria.id)} >
+                <td>
+                  <input type="checkbox"
+                  checked={categoria.id === selectedCategoriaId}
+                  onChange={() => setSelectedCategoriaId(categoria.id)}
+                  />
+                </td>
                 <td>{categoria.nome}</td>
                 <td>{categoria.descricao}</td>
                 <td>{categoria.contador_gastos}</td>
