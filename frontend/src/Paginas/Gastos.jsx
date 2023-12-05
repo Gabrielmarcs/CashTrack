@@ -17,11 +17,12 @@ const DashboardGasto = () => {
   const [isCadastrarModalOpen, setIsCadastrarModalOpen] = useState(false);
   const [selectedGastoId, setSelectedGastoId] = useState(null);
   const [isDetalhesModalOpen, setIsDetalhesModalOpen] = useState(false);
-  const selectedGasto = gastos.find((gasto) => gasto.id === selectedGastoId);
+  const selectedGastoDetalhar = gastos.find((gasto) => gasto.id === selectedGastoId);
   const [isExcluirModalOpen, setIsExcluirModalOpen] = useState(false);
   const [gastoParaExcluir, setGastoParaExcluir] = useState(null);
   const [categoriaSelecionadaId, setCategoriaSelecionadaId] = useState(null); 
   const [isAlterarModalOpen, setIsAlterarModalOpen] = useState(false);
+  const [selectedGasto, setSelectedGasto] = useState(null);
 
 
 
@@ -62,9 +63,11 @@ const DashboardGasto = () => {
     if (action === 'Cadastrar') {
       // Abre o modal de cadastro
       setIsCadastrarModalOpen(true);
-    }else if (action === 'Alterar' && selectedGastoId !== null){
-      // Abre o modal de alteração para a gasto selecionada
-      
+    }else if (action === 'Alterar' && selectedGastoId !== null) {
+      // Abre o modal de alteração para o gasto selecionado
+      const gastoSelecionado = gastos.find(gasto => gasto.id === selectedGastoId);
+      setSelectedGasto(gastoSelecionado);
+      setIsAlterarModalOpen(true);
     }else if (action === 'Detalhes' && selectedGastoId !== null) {
       setIsDetalhesModalOpen(true);
     }else if (action === 'Excluir' && selectedGastoId !== null){
@@ -88,13 +91,12 @@ const DashboardGasto = () => {
   };
 
   const handleAlterarGasto = async (dados) => {
-    try{
-      await axios.put(`http://localhost:8080/gastos/alterar`, dados);
-      // Atualizar a lista de gastos após o cadastro
+    try {
+      await axios.put(`http://localhost:8080/gastos/alterar/${dados.id}`, dados);
       const response = await axios.get('http://localhost:8080/gastos/listar');
-    setGastos(response.data);
+      setGastos(response.data);
     } catch (error) {
-      console.error('Erro ao adicionar gasto:', error);
+      console.error('Erro ao alterar gasto:', error);
     }
   };
 
@@ -193,8 +195,8 @@ const DashboardGasto = () => {
           onAlterar={handleAlterarGasto}
         />
       )}
-      {isDetalhesModalOpen && selectedGasto && (
-        <DetalharGastoModal gasto={selectedGasto} onClose={() => setIsDetalhesModalOpen(false)} />
+      {isDetalhesModalOpen && selectedGastoDetalhar && (
+        <DetalharGastoModal gasto={selectedGastoDetalhar} onClose={() => setIsDetalhesModalOpen(false)} />
       )}
       {isExcluirModalOpen && gastoParaExcluir && (
         <ExcluirGastoModal

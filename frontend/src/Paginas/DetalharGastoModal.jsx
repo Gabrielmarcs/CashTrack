@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import '../Estilos/Styles.css';
 
 const DetalharGastoModal = ({ gasto, onClose }) => {
