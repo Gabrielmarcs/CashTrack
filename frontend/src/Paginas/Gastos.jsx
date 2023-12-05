@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import SelectCategoria from '../Paginas/SelectCategoria';
 import SelectFatura from '../Paginas/SelectFatura';
 
@@ -7,7 +7,7 @@ import axios from 'axios';
 import '../Estilos/Styles.css';
 
 const CadastrarModal = ({ onClose, onAdicionar }) => {
-  
+
   const [descricao, setDescricao] = useState('');
   const [valor, setValor] = useState('');
   const [categoriaSelecionada, setCategoriaSelecionada] = useState('');
@@ -22,7 +22,7 @@ const CadastrarModal = ({ onClose, onAdicionar }) => {
   };
 
   const handleAdicionarGasto = () => {
-    onAdicionar({ descricao, valor, categoria: {id: categoriaSelecionada}, fatura: {id: faturaSelecionada}});
+    onAdicionar({ descricao, valor, categoria: { id: categoriaSelecionada }, fatura: { id: faturaSelecionada } });
     onClose();
   };
 
@@ -108,7 +108,7 @@ const AlterarModal = ({ gasto, onClose, onAlterar }) => {
   const [novoValor, setNovoValor] = useState(gasto.valor);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState(gasto.categoria.id);
   const [faturaSelecionada, setFaturaSelecionada] = useState(gasto.fatura.id);
-  
+
 
   const handleCategoriaChange = (categoriaId) => {
     setCategoriaSelecionada(categoriaId);
@@ -158,6 +158,8 @@ const AlterarModal = ({ gasto, onClose, onAlterar }) => {
   );
 };
 
+
+
 // Componente para o Dashboard principal
 const DashboardGasto = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
@@ -170,7 +172,7 @@ const DashboardGasto = () => {
   const [categoriaSelecionadaId, setCategoriaSelecionadaId] = useState(null); //adicionei agr
   const [isAlterarModalOpen, setIsAlterarModalOpen] = useState(false);
   const [selectedGasto, setSelectedGasto] = useState(null);
-  const [shouldRefreshDetails, setShouldRefreshDetails] = useState(false); 
+  const [shouldRefreshDetails, setShouldRefreshDetails] = useState(false);
 
 
   useEffect(() => {
@@ -186,10 +188,10 @@ const DashboardGasto = () => {
         console.error('Erro ao buscar os gastos:', error);
       }
     };
-  
+
     fetchGastos();
   }, [categoriaSelecionadaId]);
-  
+
 
   const handleMenuClick = (menuItem) => {
     if (menuItem === 'Receitas') {
@@ -207,21 +209,32 @@ const DashboardGasto = () => {
 
   const handleActionButtonClick = (action) => {
     if (action === 'Cadastrar') {
-      // Abre o modal de cadastro
       setIsCadastrarModalOpen(true);
-    }else if (action === 'Alterar' && selectedGastoId !== null){
-      // Abre o modal de alteração para a gasto selecionada
+    } else if (action === 'Alterar' && selectedGastoId !== null) {
       const gastoSelecionado = gastos.find(gasto => gasto.id === selectedGastoId);
       setSelectedGasto(gastoSelecionado);
       setIsAlterarModalOpen(true);
-    }else if (action === 'Detalhes' && selectedGastoId !== null) {
+    } else if (action === 'Detalhes' && selectedGastoId !== null) {
+      const gastoSelecionado = gastos.find(gasto => gasto.id === selectedGastoId);
+      setSelectedGasto(gastoSelecionado);
       setIsDetalhesModalOpen(true);
-    }else if (action === 'Excluir' && selectedGastoId !== null){
+    } else if (action === 'Excluir' && selectedGastoId !== null) {
       const gastoSelecionado = gastos.find(gasto => gasto.id === selectedGastoId);
       setGastoParaExcluir(gastoSelecionado);
       setIsExcluirModalOpen(true);
     }
   };
+
+  const handleGastoClick = (gastoId) => {
+    if (selectedGastoId === gastoId && isDetalhesModalOpen) {
+      // Se o gasto clicado é o mesmo que já está aberto nos detalhes,
+      // e os detalhes já estão abertos, não faça nada
+      return;
+    }
+    setSelectedGastoId(gastoId);
+    setIsDetalhesModalOpen(true);
+  };
+
 
   const handleAdicionarGasto = async (dados) => {
     try {
@@ -241,13 +254,16 @@ const DashboardGasto = () => {
       await axios.put(`http://localhost:8080/gastos/alterar/${dados.id}`, dados);
       const response = await axios.get('http://localhost:8080/gastos/listar');
       setGastos(response.data);
-
+  
+      const gastoAlterado = response.data.find(g => g.id === dados.id);
+      setSelectedGasto(gastoAlterado); // Atualiza o estado selectedGasto com os novos dados
+  
       setShouldRefreshDetails(true);
-
     } catch (error) {
       console.error('Erro ao alterar gasto:', error);
     }
   };
+  
 
   const handleExcluirGasto = (gasto) => {
     axios.delete(`http://localhost:8080/gastos/excluir/${gasto.id}`)
@@ -285,7 +301,7 @@ const DashboardGasto = () => {
           </button>
         </div>
       </header>
-      
+
       <SelectCategoria onCategoriaChange={(categoriaId) => setCategoriaSelecionadaId(categoriaId)} />
 
       <div className="dashboard-content">
@@ -315,32 +331,40 @@ const DashboardGasto = () => {
             </tr>
           </thead>
           <tbody>
-            {
-              gastos.map(gasto => (
-                <tr key={gasto.id} onClick={() => setSelectedGastoId(gasto.id)}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={gasto.id === selectedGastoId}
-                      onChange={() => setSelectedGastoId(gasto.id)}
-                    />
-                  </td>
-                  <td>{gasto.descricao}</td>
-                  <td>{gasto.valor}</td>
-                </tr>
-              ))
-            }
+          {
+            gastos.map(gasto => (
+              <tr key={gasto.id} onClick={() => handleGastoClick(gasto.id)}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={gasto.id === selectedGastoId}
+                    onChange={() => setSelectedGastoId(gasto.id)}
+                  />
+                </td>
+                <td>{gasto.descricao}</td>
+                <td>{gasto.valor}</td>
+              </tr>
+            ))
+          }
           </tbody>
-          
+
         </table>
       </div>
-      {isCadastrarModalOpen && (
-        <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarGasto} />
+      {isDetalhesModalOpen && selectedGasto && (
+        <DetalhesModal gasto={selectedGasto} onClose={() => setIsDetalhesModalOpen(false)} />
       )}
-      {isAlterarModalOpen && selectedGasto && (
+
+      {isDetalhesModalOpen && selectedGasto && !isAlterarModalOpen && (
+        <DetalhesModal gasto={selectedGasto} onClose={() => setIsDetalhesModalOpen(false)} />
+      )}
+
+      {isAlterarModalOpen && selectedGasto && !isDetalhesModalOpen && (
         <AlterarModal
           gasto={selectedGasto}
-          onClose={() => setIsAlterarModalOpen(false)}
+          onClose={() => {
+            setIsAlterarModalOpen(false);
+            setShouldRefreshDetails(true);
+          }}
           onAlterar={handleAlterarGasto}
         />
       )}
@@ -353,7 +377,7 @@ const DashboardGasto = () => {
           onClose={() => setIsExcluirModalOpen(false)}
           onExcluir={handleExcluirGasto}
         />
-    )}
+      )}
     </div>
   );
 };
