@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../Estilos/Cadastro.css';
 import axios from 'axios';
+import { Link,Navigate,Redirect } from 'react-router-dom';
 
 const Cadastro = () => {
   const navigate = useNavigate(); // Use useNavigate para navegação
@@ -74,6 +75,7 @@ const Cadastro = () => {
           >
             Cadastrar
           </button>
+          <Link to="/login" className="link">Já é cadastrado? Faça login aqui</Link>
         </form>
         <p>{mensagem}</p>
       </div>

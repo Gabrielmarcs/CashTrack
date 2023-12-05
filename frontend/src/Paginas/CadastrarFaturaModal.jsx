@@ -18,11 +18,11 @@ const CadastrarFaturaModal = ({ onClose, onAdicionar }) => {
           <h2>Cadastrar Fatura</h2>
           <div className="modal-nome">
             <label>Nome: </label>
-            <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
+            <input type="text" value={nome} onChange={(e) => setNome(e.target.value)}/>  
           </div>
           <div className="modal-data">
-          <label>Data de Vencimento(dd/mm/aaaa): </label>
-            <input type="text" value={dataVencimento} onChange={(e) => setDataVencimento(e.target.value)} />  
+          <label>Data de Vencimento: </label>
+            <input type="text" value={dataVencimento} onChange={(e) => setDataVencimento(e.target.value)} placeholder="dd/mm/aaaa" />  
           </div>
           <div className='modal-button'>
             <button className = 'add-button-model' onClick={handleAdicionar}>Adicionar Fatura</button>

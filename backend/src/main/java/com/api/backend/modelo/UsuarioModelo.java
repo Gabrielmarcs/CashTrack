@@ -27,7 +27,5 @@ public class UsuarioModelo {
     private String nome;
     private String email;
     private String senha;
-    //usuario tem varias receitas
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<ReceitaModelo> receitas;
+    
 }

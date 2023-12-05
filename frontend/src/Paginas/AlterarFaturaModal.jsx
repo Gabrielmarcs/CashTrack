@@ -19,8 +19,8 @@ const AlterarFaturaModal = ({ fatura, onClose, onAlterar }) => {
             <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />  
           </div>
           <div className="modal-data">
-            <label>Data de Vencimento(dd/mm/aaaa): </label>
-            <input type="text" value={dataVencimento} onChange={(e) => setDataVencimento(e.target.value)} />  
+            <label>Data de Vencimento: </label>
+            <input type="text" value={dataVencimento} onChange={(e) => setDataVencimento(e.target.value)} placeholder="dd/mm/aaaa" />  
           </div>
           <div className='modal-button'>
             <button className='add-button-model' onClick={handleAlterar}>Salvar Alterações</button>
