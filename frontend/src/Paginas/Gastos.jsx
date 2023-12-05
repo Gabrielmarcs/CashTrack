@@ -1,162 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import SelectCategoria from '../Paginas/SelectCategoria';
-import SelectFatura from '../Paginas/SelectFatura';
+import CadastrarGastoModal from './CadastrarGastoModal.jsx';
+import AlterarGastoModal from './AlterarGastoModal.jsx';
+import ExcluirGastoModal from './ExcluirGastoModal.jsx';
+import DetalharGastoModal from './DetalharGastoModal.jsx';
 
 import axios from 'axios';
 import '../Estilos/Styles.css';
 
-const CadastrarModal = ({ onClose, onAdicionar }) => {
-  
-  const [descricao, setDescricao] = useState('');
-  const [valor, setValor] = useState('');
-  const [categoriaSelecionada, setCategoriaSelecionada] = useState('');
-  const [faturaSelecionada, setFaturaSelecionada] = useState('');
-
-  const handleCategoriaChange = (categoriaId) => {
-    setCategoriaSelecionada(categoriaId);
-  };
-
-  const handleFaturaChange = (faturaId) => {
-    setFaturaSelecionada(faturaId);
-  };
-
-  const handleAdicionarGasto = () => {
-    onAdicionar({ descricao, valor, categoria: {id: categoriaSelecionada}, fatura: {id: faturaSelecionada}});
-    onClose();
-  };
-
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Cadastrar Gasto</h2>
-        <div className="modal-descricao">
-          <label>Descrição: </label>
-          <input type="text" value={descricao} onChange={(e) => setDescricao(e.target.value)} />
-        </div>
-        <div className='modal-valor'>
-          <label>Valor: </label>
-          <input type="text" value={valor} onChange={(e) => setValor(e.target.value)} />
-        </div>
-        <SelectCategoria onCategoriaChange={handleCategoriaChange} />
-        <SelectFatura onFaturaChange={handleFaturaChange} />
-        <div className='modal-button'>
-          <button className='add-button-model' onClick={handleAdicionarGasto}>Adicionar Gasto</button>
-          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const DetalhesModal = ({ gasto, onClose }) => {
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Detalhes do Gasto</h2>
-        <div className="modal-descricao">
-          <label>Descrição: </label>
-          <span>{gasto.descricao}</span>
-        </div>
-        <div className="modal-valor">
-          <label>Valor: </label>
-          <span>{gasto.valor}</span>
-        </div>
-        <div className="modal-fatura">
-          <label>Fatura: </label>
-          <span>{gasto.fatura.nome}</span>
-        </div>
-        <div className="modal-categoria">
-          <label>Categoria: </label>
-          <span>{gasto.categoria.nome}</span>
-        </div>
-        <button className="cancelar-button-model" onClick={onClose}>
-          Fechar
-        </button>
-      </div>
-    </div>
-  );
-};
-
-// Componente para o modal de Excluir
-const ExcluirModal = ({ gasto, onClose, onExcluir }) => {
-  const handleConfirmarExcluir = () => {
-    onExcluir(gasto);
-    onClose();
-  };
-
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Confirmar Exclusão</h2>
-        <p>Deseja realmente excluir o gasto "{gasto.descricao}"?</p>
-        <div className="modal-button">
-          <button className="add-button-model" onClick={handleConfirmarExcluir}>
-            Confirmar
-          </button>
-          <button className="cancelar-button-model" onClick={onClose}>
-            Cancelar
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const AlterarModal = ({ gasto, onClose, onAlterar }) => {
-  const [novaDescricao, setNovaDescricao] = useState(gasto.descricao);
-  const [novoValor, setNovoValor] = useState(gasto.valor);
-  const [categoriaSelecionada, setCategoriaSelecionada] = useState(gasto.categoria.id);
-  const [faturaSelecionada, setFaturaSelecionada] = useState(gasto.fatura.id);
-  
-
-  const handleCategoriaChange = (categoriaId) => {
-    setCategoriaSelecionada(categoriaId);
-  };
-
-  const handleFaturaChange = (faturaId) => {
-    setFaturaSelecionada(faturaId);
-  };
-
-  const handleAlterarGasto = () => {
-    onAlterar({
-      ...gasto,
-      descricao: novaDescricao,
-      valor: novoValor,
-      categoria: { id: categoriaSelecionada },
-      fatura: { id: faturaSelecionada },
-    });
-    onClose();
-  };
-
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Alterar Gasto</h2>
-        <div className="modal-descricao">
-          <label>Descrição: </label>
-          <input type="text" value={novaDescricao} onChange={(e) => setNovaDescricao(e.target.value)} />
-        </div>
-        <div className='modal-valor'>
-          <label>Valor: </label>
-          <input type="text" value={novoValor} onChange={(e) => setNovoValor(e.target.value)} />
-        </div>
-        <SelectCategoria
-          categoriaSelecionada={categoriaSelecionada}
-          onCategoriaChange={handleCategoriaChange}
-        />
-        <SelectFatura
-          faturaSelecionada={faturaSelecionada}
-          onFaturaChange={handleFaturaChange}
-        />
-        <div className='modal-button'>
-          <button className='add-button-model' onClick={handleAlterarGasto}>Alterar Gasto</button>
-          <button className='cancelar-button-model' onClick={onClose}>Cancelar</button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 // Componente para o Dashboard principal
 const DashboardGasto = () => {
@@ -168,9 +20,9 @@ const DashboardGasto = () => {
   const selectedGasto = gastos.find((gasto) => gasto.id === selectedGastoId);
   const [isExcluirModalOpen, setIsExcluirModalOpen] = useState(false);
   const [gastoParaExcluir, setGastoParaExcluir] = useState(null);
-  const [categoriaSelecionadaId, setCategoriaSelecionadaId] = useState(null); //adicionei agr
+  const [categoriaSelecionadaId, setCategoriaSelecionadaId] = useState(null); 
   const [isAlterarModalOpen, setIsAlterarModalOpen] = useState(false);
-  //const [selectedGasto, setSelectedGasto] = useState(null);
+
 
 
 
@@ -332,20 +184,20 @@ const DashboardGasto = () => {
         </table>
       </div>
       {isCadastrarModalOpen && (
-        <CadastrarModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarGasto} />
+        <CadastrarGastoModal onClose={() => setIsCadastrarModalOpen(false)} onAdicionar={handleAdicionarGasto} />
       )}
       {isAlterarModalOpen && selectedGasto && (
-        <AlterarModal
+        <AlterarGastoModal
           gasto={selectedGasto}
           onClose={() => setIsAlterarModalOpen(false)}
           onAlterar={handleAlterarGasto}
         />
       )}
       {isDetalhesModalOpen && selectedGasto && (
-        <DetalhesModal gasto={selectedGasto} onClose={() => setIsDetalhesModalOpen(false)} />
+        <DetalharGastoModal gasto={selectedGasto} onClose={() => setIsDetalhesModalOpen(false)} />
       )}
       {isExcluirModalOpen && gastoParaExcluir && (
-        <ExcluirModal
+        <ExcluirGastoModal
           gasto={gastoParaExcluir}
           onClose={() => setIsExcluirModalOpen(false)}
           onExcluir={handleExcluirGasto}
